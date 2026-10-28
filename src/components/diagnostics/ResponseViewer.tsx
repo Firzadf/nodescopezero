@@ -71,7 +71,7 @@ export function ResponseViewer({ result }: ResponseViewerProps) {
         <div className="space-y-4">
           <div>
             <PanelLabel index="02" label="RESULT" />
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2 mt-2">
+            <h3 className="text-lg font-medium text-white flex items-center gap-2 mt-2">
               <Terminal className="w-5 h-5 text-slate-400" />
               Diagnostic Result
             </h3>
@@ -79,7 +79,7 @@ export function ResponseViewer({ result }: ResponseViewerProps) {
           <div className="empty-shell px-5 py-6 flex items-start gap-4">
             <Terminal className="w-5 h-5 text-slate-600 mt-0.5 shrink-0" />
             <div>
-              <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">Awaiting first run</p>
+              <p className="font-data text-[10px] text-slate-500">Awaiting first run</p>
               <p className="text-sm text-slate-400 mt-1.5">No diagnostic executed yet. Configure an endpoint and run a method above.</p>
             </div>
           </div>
@@ -109,7 +109,7 @@ export function ResponseViewer({ result }: ResponseViewerProps) {
               ) : (
                 <AlertTriangle className="w-5 h-5 text-red-400" />
               )}
-              <h3 className="text-lg font-semibold text-white">Diagnostic Result</h3>
+              <h3 className="text-lg font-medium text-white">Diagnostic Result</h3>
             </div>
           </div>
           <button
@@ -123,24 +123,24 @@ export function ResponseViewer({ result }: ResponseViewerProps) {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-line border border-line rounded-lg overflow-hidden text-xs">
           <div className="bg-panel px-3.5 py-3">
-            <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-500 block mb-1">Method</span>
+            <span className="font-data text-[10px] text-slate-500 block mb-1">Method</span>
             <code className="text-slate-100 font-data">{result.request.method}</code>
           </div>
           <div className="bg-panel px-3.5 py-3">
-            <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-500 block mb-1">Status</span>
+            <span className="font-data text-[10px] text-slate-500 block mb-1">Status</span>
             <span className={result.success ? 'text-emerald-400 font-medium font-data' : 'text-red-400 font-medium font-data'}>
               {result.success ? 'Success' : 'Failed'}
             </span>
           </div>
           <div className="bg-panel px-3.5 py-3">
-            <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-500 block mb-1">Latency</span>
+            <span className="font-data text-[10px] text-slate-500 block mb-1">Latency</span>
             <span className="text-slate-100 flex items-center gap-1.5 font-data">
               <Zap className="w-3.5 h-3.5 text-slate-500" />
               {result.latency !== null ? `${result.latency}ms` : '—'}
             </span>
           </div>
           <div className="bg-panel px-3.5 py-3">
-            <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-500 block mb-1">Timestamp</span>
+            <span className="font-data text-[10px] text-slate-500 block mb-1">Timestamp</span>
             <span className="text-slate-100 flex items-center gap-1.5 font-data">
               <Clock className="w-3.5 h-3.5 text-slate-500" />
               {new Date(result.timestamp).toLocaleTimeString()}
@@ -157,7 +157,7 @@ export function ResponseViewer({ result }: ResponseViewerProps) {
         <div className="border border-line rounded-lg overflow-hidden">
           <div className="flex items-center justify-between gap-3 bg-black/30 px-3.5 py-2 border-b border-line">
             <span className="font-data text-[11px] text-slate-400 truncate">&gt;_ RAW RESPONSE · {result.request.method}</span>
-            <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600 shrink-0">[ Fig. 02 — Raw response ]</span>
+            <span className="font-data text-[10px] text-slate-600 shrink-0">[ Fig. 02 — Raw response ]</span>
           </div>
           <pre className="bg-slate-950/60 p-4 text-xs font-mono text-slate-400 overflow-x-auto max-h-[300px] leading-relaxed">
             {highlightJson(formattedJson)}

@@ -56,7 +56,7 @@ function CollapsedPanelRow({
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-panel px-4 py-3">
       <p className="text-sm text-slate-300">
-        <span className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500">
+        <span className="font-data text-[11px] text-slate-500">
           {index} · {label}
         </span>
         <span className="text-slate-500"> — </span>
@@ -66,7 +66,7 @@ function CollapsedPanelRow({
         type="button"
         onClick={onRun}
         disabled={running}
-        className="rounded-lg bg-[#0181FB] px-3 py-1.5 text-sm font-medium text-white transition-opacity disabled:opacity-50"
+        className="rounded-lg bg-[#7DB4FF] px-3 py-1.5 text-sm font-medium text-[#060b1d] transition-opacity disabled:opacity-50"
       >
         {running ? 'Running…' : 'Run health check'}
       </button>
@@ -104,7 +104,7 @@ export function Overview({
     metricsDetailed.clientVersion.value !== null ? metricsDetailed.clientVersion.value : '—';
 
   return (
-    <div className="space-y-6 stagger">
+    <div className="space-y-6">
       <VerdictBar
         latestHealthSnapshot={latestHealthSnapshot}
         wsProbeResult={wsProbeResult}
@@ -216,8 +216,8 @@ export function Overview({
       {connectionStatus !== 'connected' && (
         <div className="bg-panel border border-line rounded-xl p-4">
           <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#0181FB] flex items-center justify-center">
-              <span className="text-white text-sm font-bold">i</span>
+            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#7DB4FF] flex items-center justify-center">
+              <span className="text-[#060b1d] text-sm font-medium">i</span>
             </div>
             <div>
               <p className="text-sm font-medium text-slate-100">Not connected yet</p>

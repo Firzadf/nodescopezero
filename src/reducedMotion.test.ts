@@ -25,7 +25,7 @@ describe('prefers-reduced-motion', () => {
   });
 
   it('covers the scoped animation classes and the motion video', () => {
-    for (const cls of ['.animate-marquee', '.reveal', '.flow-draw', '.ecg-path', '.ribbon-streak']) {
+    for (const cls of ['.reveal', '.ecg-path', '.step-progress', '.strip-cell-in', '.odometer-strip', '.value-pop', '.state-swap']) {
       expect(reducedBlock).toContain(cls);
     }
     expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\) \{\s*\.motion-video \{ display: none; \}/);

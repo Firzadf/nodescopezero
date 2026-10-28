@@ -69,7 +69,7 @@ export function VerdictBar({ latestHealthSnapshot, wsProbeResult, latencyMs, lat
   return (
     <div className="sticky top-0 z-20 -mx-1 px-1 py-2 bg-ink/95 backdrop-blur">
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-line bg-panel px-4 py-3">
-        <span className={`inline-flex items-center rounded-full border px-3 py-1 font-data text-[11px] font-semibold tracking-[0.16em] ${COLOR[overall]}`}>
+        <span className={`inline-flex items-center rounded-full border px-3 py-1 font-data text-[11px] font-medium tracking-[0.16em] ${COLOR[overall]}`}>
           {LABEL[overall]}
         </span>
         <span className="text-xs text-slate-400">

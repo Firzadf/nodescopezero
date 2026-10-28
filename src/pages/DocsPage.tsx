@@ -18,9 +18,9 @@ export function DocsPage() {
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3">
           <a href="/" className="flex items-center gap-2.5">
             <img src="/logo.png" alt="NodeScope logo" className="h-7 w-7 rounded-lg" />
-            <span className="font-display text-[17px] font-semibold tracking-tight text-white">NodeScope</span>
+            <span className="text-[17px] font-medium tracking-tight text-white">NodeScope</span>
           </a>
-          <nav className="flex items-center gap-5 font-data text-[11px] uppercase tracking-[0.18em] text-slate-400">
+          <nav className="flex items-center gap-5 text-sm text-slate-400">
             <a href="/" className="transition-colors hover:text-white">Landing</a>
             <a href="/app" className="transition-colors hover:text-white">Launch App</a>
             <a href="/verify" className="transition-colors hover:text-white">Verify</a>
@@ -30,8 +30,8 @@ export function DocsPage() {
         </div>
       </header>
       <main className="mx-auto max-w-4xl px-4 py-10">
-        <p className="font-data text-[11px] uppercase tracking-[0.22em] text-slate-500">NodeScope / Docs</p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-white">
+        <p className="text-xs text-slate-500">NodeScope / Docs</p>
+        <h1 className="mt-2 text-[22px] font-medium tracking-tight text-white">
           Read the node. Keep the receipt.
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">
@@ -57,7 +57,7 @@ export function DocsPage() {
           <div className="mt-3 overflow-hidden rounded-xl border border-line">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-line bg-black/25 font-data text-[11px] uppercase tracking-[0.18em] text-slate-400">
+                <tr className="border-b border-line text-xs text-slate-400">
                   <th className="px-4 py-3 font-medium">Check</th>
                   <th className="px-4 py-3 font-medium">Transport</th>
                   <th className="px-4 py-3 font-medium">What it tells you</th>

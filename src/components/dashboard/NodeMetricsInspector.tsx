@@ -71,7 +71,7 @@ function StatusBadge({ status }: { status: MetricStatus }) {
     case 'not_tested':
     default:
       return (
-        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-800 text-slate-400 border border-line">
+        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-black/20 text-slate-400 border border-line">
           Not Tested
         </span>
       );
@@ -188,8 +188,8 @@ export function NodeMetricsInspector({
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 border-b border-line pb-4">
           <div>
-            <PanelLabel index="02" label="NODE METRICS" />
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2 mt-2">
+            <PanelLabel index="02" label="Node metrics" />
+            <h3 className="text-lg font-medium text-white flex items-center gap-2 mt-2">
               <Zap className="w-5 h-5 text-slate-400" />
               Node Metrics Inspector
             </h3>
@@ -206,7 +206,7 @@ export function NodeMetricsInspector({
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-xs text-amber-300 flex items-start gap-2.5">
             <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="font-data text-[10px] uppercase tracking-[0.2em] text-amber-400/90">Status — Not connected</p>
+              <p className="font-data text-[10px] text-amber-400/90">Status — Not connected</p>
               <p className="mt-1">Node is not marked as connected. You may still trigger individual diagnostics to inspect endpoint behavior.</p>
             </div>
           </div>
@@ -222,7 +222,7 @@ export function NodeMetricsInspector({
               </div>
               <StatusBadge status={singleStatusFor(metricsDetailed.latency.status, getMethodEvidenceStatus(defaultLatencyMethodForProfile(endpointProfile), capabilitySnapshot, history, endpoint))} />
             </div>
-            <div className="text-2xl font-semibold text-white font-data">
+            <div className="text-2xl font-medium text-white font-data">
               {metricsDetailed.latency.value !== null ? `${metricsDetailed.latency.value}ms` : '—'}
             </div>
             {(() => {
@@ -236,7 +236,7 @@ export function NodeMetricsInspector({
               type="button"
               onClick={runLatencyCheck}
               disabled={isActionDisabled}
-              className="w-full py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-xs font-medium text-slate-200 rounded-md flex items-center justify-center gap-2 transition-colors"
+              className="w-full py-2 border border-line hover:text-white disabled:opacity-50 text-xs font-medium text-slate-200 rounded-md flex items-center justify-center gap-2 transition-colors"
             >
               {loadingMetric === 'latency' ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
               {loadingMetric === 'latency' ? 'Measuring...' : 'Test Latency'}
@@ -266,7 +266,7 @@ export function NodeMetricsInspector({
               type="button"
               onClick={runVersionCheck}
               disabled={isActionDisabled}
-              className="w-full py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-xs font-medium text-slate-200 rounded-md flex items-center justify-center gap-2 transition-colors"
+              className="w-full py-2 border border-line hover:text-white disabled:opacity-50 text-xs font-medium text-slate-200 rounded-md flex items-center justify-center gap-2 transition-colors"
             >
               {loadingMetric === 'version' ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
               {loadingMetric === 'version' ? 'Querying...' : `Query Version (${defaultClientVersionMethodForProfile(endpointProfile)})`}
@@ -286,7 +286,7 @@ export function NodeMetricsInspector({
                 return singleStatusFor(metricsDetailed.peerCount.status, getMethodEvidenceStatus(m, capabilitySnapshot, history, endpoint));
               })()} />
             </div>
-            <div className="text-2xl font-semibold text-white font-data">
+            <div className="text-2xl font-medium text-white font-data">
               {metricsDetailed.peerCount.value !== null ? metricsDetailed.peerCount.value : '—'}
             </div>
             {(() => {
@@ -303,7 +303,7 @@ export function NodeMetricsInspector({
               type="button"
               onClick={runPeerCheck}
               disabled={isActionDisabled || !hasPeerCountSupport(endpointProfile)}
-              className="w-full py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-xs font-medium text-slate-200 rounded-md flex items-center justify-center gap-2 transition-colors"
+              className="w-full py-2 border border-line hover:text-white disabled:opacity-50 text-xs font-medium text-slate-200 rounded-md flex items-center justify-center gap-2 transition-colors"
             >
               {loadingMetric === 'peer' ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
               {loadingMetric === 'peer' ? 'Checking...' : defaultPeerMethodForProfile(endpointProfile) ? `Query Peers (${defaultPeerMethodForProfile(endpointProfile)})` : 'Peers unavailable for EVM'}
@@ -319,7 +319,7 @@ export function NodeMetricsInspector({
               </div>
               <StatusBadge status={metricsDetailed.blockHeight.status} />
             </div>
-            <div className="text-2xl font-semibold text-white">
+            <div className="text-2xl font-medium text-white">
               {metricsDetailed.blockHeight.value !== null ? metricsDetailed.blockHeight.value : '—'}
             </div>
 
@@ -332,7 +332,7 @@ export function NodeMetricsInspector({
                 value={selectedBlockMethod}
                 onChange={(e) => setSelectedBlockMethod(e.target.value)}
                 disabled={loadingMetric !== null}
-                className="w-full bg-slate-900 border border-line rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-cyan-500"
+                className="w-full bg-black/20 border border-line rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:ring-1 focus:ring-[#7DB4FF]"
               >
                 {BLOCK_METHOD_OPTIONS.map((opt) => (
                   <option key={opt.method} value={opt.method}>
@@ -356,7 +356,7 @@ export function NodeMetricsInspector({
               type="button"
               onClick={runBlockHeightCheck}
               disabled={isActionDisabled}
-              className="w-full py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-xs font-medium text-slate-200 rounded-md flex items-center justify-center gap-2 transition-colors"
+              className="w-full py-2 border border-line hover:text-white disabled:opacity-50 text-xs font-medium text-slate-200 rounded-md flex items-center justify-center gap-2 transition-colors"
             >
               {loadingMetric === 'block' ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
               {loadingMetric === 'block' ? 'Querying Block...' : `Query via ${selectedBlockMethod}`}

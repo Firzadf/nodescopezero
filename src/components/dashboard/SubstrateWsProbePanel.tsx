@@ -33,7 +33,7 @@ export function SubstrateWsProbePanel({ onResult, initialResult = null, restored
     <Card ticks>
       <div className="space-y-4">
         <PanelLabel index="06" label="SUBSTRATE WS PROBE" />
-        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+        <h3 className="text-lg font-medium text-white flex items-center gap-2">
           <Radio className="w-5 h-5 text-slate-400" />
           Substrate Node, over WebSocket
         </h3>

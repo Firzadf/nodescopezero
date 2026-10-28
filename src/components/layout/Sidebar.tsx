@@ -4,25 +4,23 @@ type NavItem = {
   id: string;
   label: string;
   icon: typeof Activity;
-  num: string;
 };
 
 // The two pillars of the suite. Health holds the original diagnostic
 // panels; Fees holds Fee Lab (Calculator and History are phase 2 and are
-// deliberately not listed here yet). Numbering runs continuously across
-// groups so Fee Lab keeps its 04 slot.
+// deliberately not listed here yet).
 const navGroups: { label: string; items: NavItem[] }[] = [
   {
     label: 'Health',
     items: [
-      { id: 'overview', label: 'Overview', icon: Activity, num: '01' },
-      { id: 'diagnostics', label: 'RPC Diagnostics', icon: Terminal, num: '02' },
-      { id: 'history', label: 'History', icon: Clock, num: '03' },
+      { id: 'overview', label: 'Overview', icon: Activity },
+      { id: 'diagnostics', label: 'RPC Diagnostics', icon: Terminal },
+      { id: 'history', label: 'History', icon: Clock },
     ],
   },
   {
     label: 'Fees',
-    items: [{ id: 'fee-lab', label: 'Fee Lab', icon: Scale, num: '04' }],
+    items: [{ id: 'fee-lab', label: 'Fee Lab', icon: Scale }],
   },
 ];
 
@@ -35,7 +33,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collapsed = false, onToggleCollapse }: SidebarProps) {
-  const width = collapsed ? 'w-16' : 'w-64';
+  const width = collapsed ? 'w-16' : 'w-[228px]';
   const ToggleIcon = collapsed ? PanelLeftOpen : PanelLeftClose;
   // Collapsed geometry: every row is the same centered 40x40 square, so all
   // icons share one exact centre (32px in a 64px sidebar). The old code kept
@@ -48,9 +46,9 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
   const rowWrap = collapsed ? 'px-0 space-y-1.5' : 'px-3 space-y-1.5';
   const smallIcon = collapsed ? 'h-[18px] w-[18px]' : 'h-4 w-4';
   return (
-    <aside className={`${width} bg-deep border-r border-line min-h-screen flex flex-col shrink-0 transition-[width] duration-200`}>
+    <aside className={`${width} bg-deep min-h-screen flex flex-col shrink-0 transition-[width] duration-200`}>
       <div className={`flex items-center pt-5 pb-2 ${collapsed ? 'justify-center px-0' : 'justify-between px-3'}`}>
-        {!collapsed && <p className="px-2 font-data text-[10px] uppercase tracking-[0.24em] text-slate-600">Workspace</p>}
+        {!collapsed && <p className="px-2 text-xs text-slate-500">Workspace</p>}
         {onToggleCollapse && (
           <button
             type="button"
@@ -58,7 +56,7 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             aria-expanded={!collapsed}
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            className={`btn-ghost flex shrink-0 items-center justify-center rounded-lg ${collapsed ? 'h-10 w-10' : 'h-8 w-8'}`}
+            className={`flex shrink-0 items-center justify-center rounded-lg border border-line text-slate-300 transition-colors hover:text-white ${collapsed ? 'h-10 w-10' : 'h-8 w-8'}`}
           >
             <ToggleIcon className={smallIcon} />
           </button>
@@ -69,13 +67,13 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
           type="button"
           onClick={onOpenPalette}
           title={`Jump to… (${typeof navigator !== 'undefined' && /Mac|iPhone/.test(navigator.platform) ? '⌘K' : 'Ctrl+K'})`}
-          className={`${row} border border-line bg-white/[0.02] text-sm text-slate-400 transition-colors hover:border-slate-500/50 hover:text-slate-200`}
+          className={`${row} border border-line bg-panel text-sm text-slate-400 transition-colors hover:text-slate-200`}
         >
           <Search className={`${smallIcon} shrink-0`} />
           {!collapsed && (
             <>
               Jump to…
-              <kbd className="ml-auto shrink-0 rounded border border-line px-1.5 py-0.5 font-data text-[10px] text-slate-500">{typeof navigator !== 'undefined' && /Mac|iPhone/.test(navigator.platform) ? '⌘K' : 'Ctrl+K'}</kbd>
+              <kbd className="ml-auto shrink-0 rounded border border-line px-1.5 py-0.5 font-data text-xs text-slate-500">{typeof navigator !== 'undefined' && /Mac|iPhone/.test(navigator.platform) ? '⌘K' : 'Ctrl+K'}</kbd>
             </>
           )}
         </button>
@@ -84,7 +82,7 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
         {navGroups.map((group, gi) => (
           <div key={group.label} className={gi > 0 ? 'pt-1.5' : undefined}>
             {!collapsed && (
-              <p className="px-2 pb-1.5 font-data text-[10px] uppercase tracking-[0.24em] text-slate-600">{group.label}</p>
+              <p className="px-2 pb-1.5 text-xs text-slate-500">{group.label}</p>
             )}
             {collapsed && gi > 0 && (
               <div aria-hidden="true" className="mx-auto my-1.5 h-px w-6 bg-line" />
@@ -100,20 +98,17 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
                     title={item.label}
                     className={`relative ${row} text-sm transition-colors ${
                       isActive
-                        ? 'bg-white/[0.06] text-white font-medium shadow-[0_0_20px_rgba(1,129,251,0.15)]'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.03]'
+                        ? 'text-white font-medium'
+                        : 'text-slate-400 hover:text-slate-200'
                     }`}
                   >
                     {isActive && (
-                      <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-full bg-[#0181FB]" />
+                      <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[2px] bg-[#7DB4FF]" />
                     )}
                     <Icon className={`h-[18px] w-[18px] ${isActive ? 'text-white' : 'text-slate-500'}`} />
                     {!collapsed && (
                       <>
                         {item.label}
-                        <span className={`ml-auto font-data text-[10px] ${isActive ? 'text-slate-400' : 'text-slate-600'}`}>
-                          {item.num}
-                        </span>
                       </>
                     )}
                   </button>
@@ -126,14 +121,14 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
 
       {!collapsed && (
         <div className="px-5 pt-6 pb-2">
-          <p className="font-data text-[10px] uppercase tracking-[0.24em] text-slate-600">Public pages</p>
+          <p className="text-xs text-slate-500">Public pages</p>
         </div>
       )}
       <nav className={rowWrap}>
         <a
           href="/"
           title="Back to landing page"
-          className={`${row} text-sm text-slate-400 transition-colors hover:text-slate-200 hover:bg-white/[0.03]`}
+          className={`${row} text-sm text-slate-400 transition-colors hover:text-slate-200`}
         >
           <Home className="h-[18px] w-[18px] text-slate-500" />
           {!collapsed && '← Landing page'}
@@ -141,7 +136,7 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
         <a
           href="/verify"
           title="Verify a Report"
-          className={`${row} text-sm text-slate-400 transition-colors hover:text-slate-200 hover:bg-white/[0.03]`}
+          className={`${row} text-sm text-slate-400 transition-colors hover:text-slate-200`}
         >
           <ShieldCheck className="h-[18px] w-[18px] text-slate-500" />
           {!collapsed && 'Verify a Report'}
@@ -149,7 +144,7 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
         <a
           href="/mainnet"
           title="Mainnet Profile"
-          className={`${row} text-sm text-slate-400 transition-colors hover:text-slate-200 hover:bg-white/[0.03]`}
+          className={`${row} text-sm text-slate-400 transition-colors hover:text-slate-200`}
         >
           <Globe className="h-[18px] w-[18px] text-slate-500" />
           {!collapsed && 'Mainnet Profile'}
@@ -157,7 +152,7 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
         <a
           href="/fees"
           title="Fees"
-          className={`${row} text-sm text-slate-400 transition-colors hover:text-slate-200 hover:bg-white/[0.03]`}
+          className={`${row} text-sm text-slate-400 transition-colors hover:text-slate-200`}
         >
           <Scale className="h-[18px] w-[18px] text-slate-500" />
           {!collapsed && 'Fees'}
@@ -165,15 +160,15 @@ export function Sidebar({ activeSection, onSectionChange, onOpenPalette, collaps
       </nav>
 
       {!collapsed && (
-        <div className="mt-auto p-4">
-          <div className="rounded-xl border border-line bg-panel p-3.5">
-            <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-600">Target Network</p>
+        <div className="mt-auto px-4 pb-4">
+          <div className="border-t border-line pt-4">
+            <p className="text-xs text-slate-500">Target Network</p>
             <p className="text-sm font-medium text-white mt-1.5">Portaldot V3 EVM</p>
             <div className="flex items-center gap-2 mt-1">
               <span className="w-1.5 h-1.5 rounded-full bg-slate-500" />
-              <span className="font-data text-[11px] text-slate-400">CHAIN 420420777</span>
+              <span className="font-data text-xs text-slate-400">Chain 420420777</span>
             </div>
-            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600 mt-2.5">Testnet · Read-only RPC</p>
+            <p className="text-xs text-slate-500 mt-2.5">Testnet · Read-only RPC</p>
           </div>
         </div>
       )}

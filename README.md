@@ -25,7 +25,7 @@ instead of the headline multiple.
 - Fees finding, measured 27 Oct 2026: a contract deploy costs 124.098 tPOT
   on EVM vs 122.191 tPOT native all-in — 1.016x all-in, not the 804x
   fee-only headline. Most of the gap is a refundable storage deposit.
-- 467 passing tests across 67 test files. CI green on Ubuntu and Windows
+- 470 passing tests across 68 test files. CI green on Ubuntu and Windows
   (Foundry on Ubuntu), plus a `verify:evidence` job that rechecks every
   anchor on chain.
 
@@ -411,7 +411,7 @@ src/
 
 **Test Framework:** Vitest 5 with @testing-library/react  
 **Coverage Target:** 80%+  
-**Current Status:** 467 passing tests across 67 test files, verified 27 Oct 2026
+**Current Status:** 470 passing tests across 68 test files, verified 28 Oct 2026
 
 ### Test Files
 
@@ -440,7 +440,7 @@ src/
 | `artifactInput.test.ts` | Custom artifact parsing, coded failures |
 | `feeLabShare.test.ts` | Fee Lab share-link round-trip and forgiving parse |
 | 6 files not listed above | Component and utility tests added in later phases, including Landing and Command Palette |
-| **Total** | **467 passing tests, 67 test files** (suite verified 27 Oct 2026; the landing page, /judges, and this README are checked against one constants file by `src/utils/siteConsistency.test.tsx` and `npm run check:consistency`) |
+| **Total** | **470 passing tests, 68 test files** (suite verified 28 Oct 2026; the landing page, /judges, and this README are checked against one constants file by `src/utils/siteConsistency.test.tsx` and `npm run check:consistency`) |
 
 ### Running Tests
 

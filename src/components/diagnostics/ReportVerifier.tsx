@@ -92,11 +92,11 @@ function ReportContents({ report, attested }: { report: DiagnosticReportExport; 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div>
           <div className="text-xs text-slate-500">Exported at</div>
-          <div className="text-xs font-semibold text-white font-data mt-0.5">{report.exportedAt}</div>
+          <div className="text-xs font-medium text-white font-data mt-0.5">{report.exportedAt}</div>
         </div>
         <div>
           <div className="text-xs text-slate-500">Records</div>
-          <div className="text-lg font-semibold text-white font-data">{report.recordCount}</div>
+          <div className="text-lg font-medium text-white font-data">{report.recordCount}</div>
         </div>
         <div>
           <div className="text-xs text-slate-500">Outcomes</div>
@@ -145,7 +145,7 @@ function ReportContents({ report, attested }: { report: DiagnosticReportExport; 
         <div className="pt-3 border-t border-line text-xs space-y-1">
           <p className="text-slate-400">
             Session verdict:{' '}
-            <span className={`font-data font-semibold ${verdictColor(trends.verdict.level)}`}>
+            <span className={`font-data font-medium ${verdictColor(trends.verdict.level)}`}>
               {trends.verdict.level.toUpperCase()}
             </span>{' '}
             — {trends.verdict.rules.filter((r) => r.fired).length} of {trends.verdict.rules.length} rules
@@ -249,7 +249,7 @@ export function ReportVerifier() {
       <div className="space-y-4">
         <div>
           <PanelLabel index="03" label="VERIFY" />
-          <h3 className="text-lg font-semibold text-white mt-2">Verify a Report</h3>
+          <h3 className="text-lg font-medium text-white mt-2">Verify a Report</h3>
           <p className="text-xs text-slate-400 mt-1">
             Check a NodeScope report file against the SHA-256 integrity stamp it was exported
             with. Everything is computed locally in your browser — the file is never uploaded.
@@ -283,7 +283,7 @@ export function ReportVerifier() {
           <p className="text-sm text-slate-300 mt-2">
             {busy ? 'Verifying…' : 'Drop a report JSON file here, or click to browse'}
           </p>
-          <p className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-500 mt-1.5">
+          <p className="font-data text-[10px] text-slate-500 mt-1.5">
             {fileName ?? 'nodescope-diagnostic-report-*.json'}
           </p>
           <input
@@ -319,7 +319,7 @@ export function ReportVerifier() {
           <button
             type="button"
             onClick={() => setPasteOpen((open) => !open)}
-            className="text-xs text-slate-400 hover:text-white transition-colors font-data uppercase tracking-[0.14em]"
+            className="text-xs text-slate-400 hover:text-white transition-colors font-data"
           >
             {pasteOpen ? 'Hide paste input' : 'Or paste report JSON'}
           </button>
@@ -357,7 +357,7 @@ export function ReportVerifier() {
           <div key={`${result.status}-${result.computedHash ?? ''}`} className="state-swap space-y-4">
             {isSample && (
               <p>
-                <span className="inline-flex items-center rounded border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-data text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-300">
+                <span className="inline-flex items-center rounded border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 font-data text-[11px] font-medium text-amber-300">
                   Sample
                 </span>{' '}
                 <span className="text-xs text-slate-500">
@@ -366,7 +366,7 @@ export function ReportVerifier() {
               </p>
             )}
             <div className={`border rounded-lg p-4 ${meta.banner}`}>
-              <div className={`flex items-center gap-2 font-data text-sm font-semibold tracking-wide ${meta.text}`}>
+              <div className={`flex items-center gap-2 font-data text-sm font-medium ${meta.text}`}>
                 <StatusIcon status={result.status} />
                 {meta.label}
               </div>

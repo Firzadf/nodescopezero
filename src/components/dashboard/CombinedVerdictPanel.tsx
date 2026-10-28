@@ -26,13 +26,13 @@ export function CombinedVerdictPanel({ latestHealthSnapshot, wsProbeResult, prob
     <Card ticks>
       <div className="space-y-4">
         <PanelLabel index="07" label="COMBINED VERDICT" />
-        <h3 className="text-lg font-semibold text-white">One node, two transports, one verdict</h3>
+        <h3 className="text-lg font-medium text-white">One node, two transports, one verdict</h3>
         <p className="text-xs text-slate-400 leading-relaxed">
           The EVM side comes from your latest health snapshot. The Substrate side comes from the
           WebSocket probe below. Run both, and this panel reads them together. It does not poll,
           and it does not invent a side that has not run yet.
         </p>
-        <p className={`text-sm font-data font-semibold ${
+        <p className={`text-sm font-data font-medium ${
           verdict.status === 'complete' ? 'text-emerald-400' : verdict.status === 'partial' ? 'text-amber-400' : 'text-slate-400'
         }`}>
           {STATUS_LABEL[verdict.status]}
@@ -44,7 +44,7 @@ export function CombinedVerdictPanel({ latestHealthSnapshot, wsProbeResult, prob
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-data">
           <div className="bg-black/25 border border-line rounded-lg p-4 space-y-1.5">
-            <p className="text-slate-500 uppercase tracking-[0.14em]">EVM · HTTP</p>
+            <p className="text-slate-500">EVM · HTTP</p>
             {evm ? (
               <>
                 <p><span className="text-slate-500">Endpoint </span><span className="text-slate-200">{evm.endpointOrigin}</span></p>
@@ -59,7 +59,7 @@ export function CombinedVerdictPanel({ latestHealthSnapshot, wsProbeResult, prob
             )}
           </div>
           <div className="bg-black/25 border border-line rounded-lg p-4 space-y-1.5">
-            <p className="text-slate-500 uppercase tracking-[0.14em]">Substrate · WebSocket</p>
+            <p className="text-slate-500">Substrate · WebSocket</p>
             {ws ? (
               <>
                 <p><span className="text-slate-500">Status </span><span className="text-slate-200">{ws.status === 'ok' ? 'Answered' : `Failed: ${ws.error ?? 'unknown error'}`}</span></p>

@@ -32,7 +32,7 @@ export function BackToTop({ label }: { label: string }) {
       type="button"
       aria-label={label}
       onClick={goTop}
-      className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-[#0181FB]/40 bg-[#0181FB] text-white shadow-[0_12px_32px_rgba(1,129,251,0.45)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_40px_rgba(1,129,251,0.6)]"
+      className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-[#7DB4FF]/40 bg-[#7DB4FF] text-[#060b1d] transition-colors duration-300 hover:brightness-105"
     >
       <ArrowUp className="h-5 w-5" />
     </button>

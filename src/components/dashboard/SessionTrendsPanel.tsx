@@ -41,7 +41,7 @@ const VERDICT_STYLE: Record<VerdictLevel, { word: string; text: string; Icon: ty
 
 function RuleRow({ rule, index }: { rule: VerdictRuleResult; index: number }) {
   const tag = !rule.evaluated
-    ? { label: 'NOT EVALUATED', cls: 'bg-slate-800 text-slate-400 border-line' }
+    ? { label: 'NOT EVALUATED', cls: 'bg-black/20 text-slate-400 border-line' }
     : rule.fired
       ? rule.effect === 'unstable'
         ? { label: 'FIRED', cls: 'bg-red-500/10 text-red-400 border-red-500/30' }
@@ -49,12 +49,12 @@ function RuleRow({ rule, index }: { rule: VerdictRuleResult; index: number }) {
       : { label: 'CLEAR', cls: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' };
 
   return (
-    <div className="bg-slate-900 border border-line rounded p-3 text-xs space-y-1.5">
+    <div className="bg-black/20 border border-line rounded p-3 text-xs space-y-1.5">
       <div className="flex flex-wrap items-center gap-2">
         <span className="font-data text-slate-600">[{String(index + 1).padStart(3, '0')}]</span>
-        <span className={`px-2 py-0.5 rounded text-[11px] font-semibold border ${tag.cls}`}>{tag.label}</span>
+        <span className={`px-2 py-0.5 rounded text-[11px] font-medium border ${tag.cls}`}>{tag.label}</span>
         <span className="text-slate-500 font-data text-[11px]">{rule.ruleId}</span>
-        <span className="text-slate-500 text-[11px] uppercase tracking-wider">
+        <span className="text-slate-500 text-[11px]">
           → {rule.effect === 'unstable' ? 'Unstable' : 'Degraded'} if fired
         </span>
       </div>
@@ -70,8 +70,8 @@ function RuleRow({ rule, index }: { rule: VerdictRuleResult; index: number }) {
 function PanelHeader() {
   return (
     <div className="border-b border-line pb-4">
-      <PanelLabel index="05" label="TRENDS & VERDICT" />
-      <h3 className="text-lg font-semibold text-white flex items-center gap-2 mt-2">
+      <PanelLabel index="05" label="Trends & verdict" />
+      <h3 className="text-lg font-medium text-white flex items-center gap-2 mt-2">
         <TrendingUp className="w-5 h-5 text-slate-400" />
         Session Trends &amp; Verdict
       </h3>
@@ -105,7 +105,7 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
           <div className="empty-shell px-5 py-6 flex items-start gap-4">
             <TrendingUp className="w-5 h-5 text-slate-600 mt-0.5 shrink-0" />
             <div>
-              <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">Insufficient data</p>
+              <p className="font-data text-[10px] text-slate-500">Insufficient data</p>
               <p className="text-sm font-medium text-slate-300 mt-1.5">{trends.reason}</p>
               <p className="text-xs text-slate-500 mt-1">
                 {snapshots.length === 0
@@ -136,7 +136,7 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
         <PanelHeader />
 
         <div className="bg-sky-500/10 border border-sky-500/30 rounded-lg p-3 text-xs text-sky-300 flex items-start gap-2">
-          <GitBranch className="w-4 h-4 flex-shrink-0 mt-0.5 text-sky-400" />
+          <GitBranch className="w-4 h-4 flex-shrink-0 mt-0.5 text-[#7DB4FF]" />
           <p>{describeV3Eras(groupSnapshots)}</p>
         </div>
 
@@ -161,10 +161,10 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
             <div className="flex items-center gap-3">
               <VerdictIcon className={`w-8 h-8 ${verdictStyle.text}`} />
               <div>
-                <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">
+                <p className="font-data text-[10px] text-slate-500">
                   Session verdict — deterministic
                 </p>
-                <p className={`text-3xl font-bold tracking-tight ${verdictStyle.text}`}>{verdictStyle.word}</p>
+                <p className={`text-3xl font-medium tracking-tight ${verdictStyle.text}`}>{verdictStyle.word}</p>
               </div>
             </div>
             <div className="font-data text-[11px] text-slate-500 space-y-0.5 md:text-right">
@@ -189,15 +189,15 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
         {/* Session stat strip */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-line border border-line rounded-xl overflow-hidden">
           <div className="bg-panel p-4">
-            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-500">Checks in session</p>
-            <p className="value-pop font-data text-xl font-semibold text-white mt-1.5" key={trends.snapshotCount}>
+            <p className="font-data text-[10px] text-slate-500">Checks in session</p>
+            <p className="value-pop font-data text-xl font-medium text-white mt-1.5" key={trends.snapshotCount}>
               {trends.snapshotCount}
             </p>
             <p className="text-[11px] text-slate-500 mt-0.5">snapshots, one endpoint</p>
           </div>
           <div className="bg-panel p-4">
-            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-500">Session window</p>
-            <p className="font-data text-sm font-semibold text-white mt-2">
+            <p className="font-data text-[10px] text-slate-500">Session window</p>
+            <p className="font-data text-sm font-medium text-white mt-2">
               {trends.firstTimestamp !== null ? clock(trends.firstTimestamp) : '—'} →{' '}
               {trends.lastTimestamp !== null ? clock(trends.lastTimestamp) : '—'}
             </p>
@@ -208,16 +208,16 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
             </p>
           </div>
           <div className="bg-panel p-4">
-            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-500">Pass rate</p>
-            <p className="font-data text-xl font-semibold text-white mt-1.5">
+            <p className="font-data text-[10px] text-slate-500">Pass rate</p>
+            <p className="font-data text-xl font-medium text-white mt-1.5">
               {trends.passRate.passed}/{trends.passRate.total}
               <span className="text-slate-400 text-sm"> · {passPercent}</span>
             </p>
             <p className="text-[11px] text-slate-500 mt-0.5">unsupported methods count as not passed, never as failures</p>
           </div>
           <div className="bg-panel p-4">
-            <p className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-500">Median block interval</p>
-            <p className="font-data text-xl font-semibold text-white mt-1.5">
+            <p className="font-data text-[10px] text-slate-500">Median block interval</p>
+            <p className="font-data text-xl font-medium text-white mt-1.5">
               {prog.medianSecondsPerBlock !== null ? `${fmtSeconds(prog.medianSecondsPerBlock)} s/block` : '—'}
             </p>
             <p className="text-[11px] text-slate-500 mt-0.5">estimate — see note below</p>
@@ -227,11 +227,11 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
         {/* Block progression */}
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3">
-            <h4 className="text-sm font-semibold text-slate-300 flex items-center gap-2">
+            <h4 className="text-sm font-medium text-slate-300 flex items-center gap-2">
               <GitBranch className="w-4 h-4 text-slate-500" />
               Block Progression
             </h4>
-            <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">
+            <span className="font-data text-[10px] text-slate-600">
               [ Fig. 01 — {prog.method ?? 'block height'} ]
             </span>
           </div>
@@ -247,7 +247,7 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
                 </span>
                 <span className="text-slate-400">
                   Total delta:{' '}
-                  <span className="text-gradient font-data font-bold text-sm">
+                  <span className="text-[#7DB4FF] font-data font-medium text-sm">
                     {`${prog.totalDelta !== null && !prog.totalDelta.startsWith('-') ? '+' : ''}${prog.totalDelta} blocks`}
                   </span>
                 </span>
@@ -256,7 +256,7 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
                 {prog.intervals.map((interval) => (
                   <div
                     key={`${interval.fromSnapshotId}-${interval.toSnapshotId}`}
-                    className="flex flex-wrap items-center gap-x-3 gap-y-0.5 bg-slate-900/60 border border-line/60 rounded px-2.5 py-1.5 font-data text-[11px] text-slate-400"
+                    className="flex flex-wrap items-center gap-x-3 gap-y-0.5 bg-black/20 border border-line/60 rounded px-2.5 py-1.5 font-data text-[11px] text-slate-400"
                   >
                     <span>
                       {clock(interval.fromTimestamp)} → {clock(interval.toTimestamp)}
@@ -279,7 +279,7 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
                   key={`stall-${stall.earlierSnapshotId}-${stall.laterSnapshotId}`}
                   className="bg-amber-500/5 border border-amber-500/25 rounded-lg p-3 text-xs text-amber-200/90"
                 >
-                  <span className="font-semibold">Stall finding: </span>
+                  <span className="font-medium">Stall finding: </span>
                   block height unchanged at <code className="font-data">{stall.height}</code> between two
                   consecutive checks ({fmtSeconds(stall.gapSeconds)} s apart).
                 </div>
@@ -289,7 +289,7 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
                   key={`regression-${regression.earlierSnapshotId}-${regression.laterSnapshotId}`}
                   className="bg-red-500/5 border border-red-500/25 rounded-lg p-3 text-xs text-red-200/90"
                 >
-                  <span className="font-semibold">Regression finding: </span>
+                  <span className="font-medium">Regression finding: </span>
                   block height decreased <code className="font-data">{regression.fromHeight}</code> →{' '}
                   <code className="font-data">{regression.toHeight}</code> between consecutive checks.
                 </div>
@@ -307,8 +307,8 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
         {/* Timeline charts — same snapshots, same numbers, drawn */}
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3">
-            <h4 className="text-sm font-semibold text-slate-300">Timeline</h4>
-            <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">
+            <h4 className="text-sm font-medium text-slate-300">Timeline</h4>
+            <span className="font-data text-[10px] text-slate-600">
               [ Fig. 01b — Session over time ]
             </span>
           </div>
@@ -318,14 +318,14 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
         {/* Latency trends */}
         <div className="space-y-3">
           <div className="flex items-baseline justify-between gap-3">
-            <h4 className="text-sm font-semibold text-slate-300">Latency Trends by Method</h4>
-            <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">
+            <h4 className="text-sm font-medium text-slate-300">Latency Trends by Method</h4>
+            <span className="font-data text-[10px] text-slate-600">
               [ Fig. 02 — Recorded response times ]
             </span>
           </div>
           <div className="overflow-x-auto border border-line rounded-lg">
-            <table className="premium-table premium-table-sky w-full text-left text-xs border-collapse">
-              <thead className="bg-slate-900 border-b border-line text-slate-400 uppercase text-[10px]">
+            <table className="premium-table w-full text-left text-xs border-collapse">
+              <thead className="bg-black/20 border-b border-line text-slate-400 text-[10px]">
                 <tr>
                   <th className="p-2.5">Method</th>
                   <th className="p-2.5">Samples</th>
@@ -335,9 +335,9 @@ export function SessionTrendsPanel({ snapshots }: SessionTrendsPanelProps) {
                   <th className="p-2.5">Last</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 bg-slate-950/40 font-mono">
+              <tbody className="divide-y divide-line font-mono">
                 {trends.methods.map((m) => (
-                  <tr key={m.method} className="hover:bg-slate-900/50">
+                  <tr key={m.method} className="hover:bg-white/[0.03]">
                     <td className="p-2.5 text-slate-200 font-data font-medium">{m.method}</td>
                     <td className="p-2.5 text-slate-300">{m.samples}</td>
                     <td className="p-2.5 text-slate-300">{m.minMs !== null ? `${fmtMs(m.minMs)} ms` : '—'}</td>

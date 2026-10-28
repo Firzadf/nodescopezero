@@ -19,8 +19,8 @@ afterEach(() => {
 describe('Landing', () => {
   it('renders the hero claim and Launch App CTAs pointing at /app', () => {
     render(<Landing />);
-    expect(screen.getByText(/Consoles interact\./i)).toBeInTheDocument();
-    expect(screen.getAllByText(/proves\./i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(/Every check, anchored\./i)).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: /anchored reports orbiting/i })).toBeInTheDocument();
     const ctas = screen.getAllByRole('link', { name: /Launch App/i });
     expect(ctas.length).toBeGreaterThanOrEqual(2);
     ctas.forEach((cta) => expect(cta).toHaveAttribute('href', '/app'));
@@ -65,10 +65,9 @@ describe('Landing', () => {
     expect(screen.getByText(/Δ \+12 · 76 s/)).toBeInTheDocument();
   });
 
-  it('renders the evidence grid with one cell per observed block', () => {
+  it('states the observed block range as a sentence instead of a decorative grid', () => {
     render(<Landing />);
-    const grid = screen.getByRole('img', { name: /48 consecutive blocks/i });
-    expect(grid.children).toHaveLength(48);
+    expect(screen.getByText(/Range 147,592 to 147,639 observed end-to-end in one session\./i)).toBeInTheDocument();
   });
 
   it('labels the roadmap honestly', () => {

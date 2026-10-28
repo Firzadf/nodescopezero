@@ -17,23 +17,23 @@ export function TerminalFeed({ history }: TerminalFeedProps) {
   const latest = history.slice(0, 8);
 
   return (
-    <section aria-label="Session terminal" className="border-t border-line bg-deep shadow-[0_-12px_40px_rgba(0,0,0,0.3)]">
+    <section aria-label="Session terminal" className="border-t border-line bg-deep">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex w-full items-center gap-3 px-6 py-3 text-left transition-colors hover:bg-white/[0.02]"
+        className="flex w-full items-center gap-3 px-6 py-3 text-left"
       >
-        <Terminal className="h-4 w-4 shrink-0 text-[#0181FB]" />
-        <span className="font-data text-[11px] uppercase tracking-[0.22em] text-slate-300">
+        <Terminal className="h-4 w-4 shrink-0 text-[#7DB4FF]" />
+        <span className="font-data text-xs text-slate-300">
           Terminal — session ledger
         </span>
-        <span className="font-data text-[11px] text-slate-500">
+        <span className="font-data text-xs text-slate-500">
           {history.length === 0
             ? 'no checks run yet'
             : `${history.length} record${history.length === 1 ? '' : 's'} · latest ${latest[0].request.method}`}
         </span>
-        <span className="ml-auto flex items-center gap-2 font-data text-[11px] uppercase tracking-[0.18em] text-slate-500">
+        <span className="ml-auto flex items-center gap-2 font-data text-xs text-slate-500">
           {open ? 'Collapse' : 'Expand'}
           {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </span>

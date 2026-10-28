@@ -35,9 +35,9 @@ export function JudgesPage() {
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3">
           <a href="/" className="flex items-center gap-2.5">
             <img src="/logo.png" alt="NodeScope logo" className="h-7 w-7 rounded-lg" />
-            <span className="font-display text-[17px] font-semibold tracking-tight text-white">NodeScope</span>
+            <span className="text-[17px] font-medium tracking-tight text-white">NodeScope</span>
           </a>
-          <nav className="flex items-center gap-5 font-data text-[11px] uppercase tracking-[0.18em] text-slate-400">
+          <nav className="flex items-center gap-5 text-sm text-slate-400">
             <a href="/" className="transition-colors hover:text-white">Landing</a>
             <a href="/app" className="transition-colors hover:text-white">Launch App</a>
             <a href="/verify" className="transition-colors hover:text-white">Verify</a>
@@ -46,8 +46,8 @@ export function JudgesPage() {
         </div>
       </header>
       <main className="mx-auto max-w-4xl px-4 py-10">
-        <p className="font-data text-[11px] uppercase tracking-[0.22em] text-slate-500">NodeScope / For judges</p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-white">
+        <p className="text-xs text-slate-500">NodeScope / For judges</p>
+        <h1 className="mt-2 text-[22px] font-medium tracking-tight text-white">
           Verify it in 60 seconds.
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">
@@ -73,12 +73,12 @@ export function JudgesPage() {
           <h2 className="text-xl font-semibold text-white">Sample report</h2>
           <p className="mt-3 text-sm leading-relaxed text-slate-400">
             A real export, bundled in the repo as <code className="font-data text-slate-300">/sample-report.json</code>. It is
-            labeled <span className="font-data text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-300">Sample</span> wherever
+            labeled <span className="font-data text-xs font-medium text-amber-300">Sample</span> wherever
             it is shown, and it was <strong className="text-slate-200">not</strong> anchored on chain — it exists so the
             verifier can be tested without running a diagnostic first.
           </p>
           <div className="mt-4 rounded-xl border border-line bg-panel/60 p-4">
-            <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-500">SHA-256 of the canonical report</p>
+            <p className="font-data text-xs text-slate-500">SHA-256 of the canonical report</p>
             <p className="mt-2 break-all font-data text-[13px] text-slate-200">{SAMPLE_HASH}</p>
             <p className="mt-2 text-xs text-slate-500">
               Exported {SAMPLE_EXPORTED_AT} · {SAMPLE_RECORDS} records · schema {REPORT_SCHEMA_VERSION} · every record origin {DEFAULT_PORTALDOT_V3_EVM_RPC}
@@ -99,7 +99,7 @@ export function JudgesPage() {
             recompute its SHA-256.
           </p>
           <div className="mt-4 rounded-xl border border-line bg-panel/60 p-4">
-            <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-500">Registry contract</p>
+            <p className="font-data text-xs text-slate-500">Registry contract</p>
             <p className="mt-2 break-all font-data text-[13px] text-slate-200">{REGISTRY_CONTRACT}</p>
             <p className="mt-1 text-xs text-slate-500">Portaldot V3 testnet · chain {PORTALDOT_CHAIN_ID} · ownerless</p>
           </div>
@@ -137,17 +137,17 @@ export function JudgesPage() {
           </p>
           <div className="mt-4 grid gap-3 md:grid-cols-3">
             <div className="rounded-xl border border-line bg-panel/60 p-4">
-              <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-500">Earlier registry</p>
+              <p className="font-data text-xs text-slate-500">Earlier registry</p>
               <p className="mt-2 break-all font-data text-[13px] text-slate-200">{SUPPLEMENT_REGISTRY}</p>
               <p className="mt-1 text-xs text-slate-500">Portaldot V3 testnet · chain {PORTALDOT_CHAIN_ID} · ownerless</p>
             </div>
             <div className="rounded-xl border border-line bg-panel/60 p-4">
-              <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-500">Earlier anchor transaction</p>
+              <p className="font-data text-xs text-slate-500">Earlier anchor transaction</p>
               <p className="mt-2 break-all font-data text-[13px] text-slate-200">{SUPPLEMENT_ANCHOR_TX}</p>
               <p className="mt-1 text-xs text-slate-500">Anchor block {SUPPLEMENT_ANCHOR_BLOCK} · receipt status success</p>
             </div>
             <div className="rounded-xl border border-line bg-panel/60 p-4">
-              <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-500">Earlier anchored report hash</p>
+              <p className="font-data text-xs text-slate-500">Earlier anchored report hash</p>
               <p className="mt-2 break-all font-data text-[13px] text-slate-200">{SUPPLEMENT_REPORT_HASH}</p>
               <p className="mt-1 text-xs text-slate-500">Exported {SUPPLEMENT_REPORT_EXPORTED_AT} · {SUPPLEMENT_REPORT_RECORDS} records</p>
             </div>

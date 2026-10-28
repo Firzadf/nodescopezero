@@ -28,7 +28,7 @@ function CheckStatusBadge({ status }: { status: CheckComparisonStatus }) {
   switch (status) {
     case 'unchanged':
       return (
-        <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-800 text-slate-300 border border-line">
+        <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-black/20 text-slate-300 border border-line">
           Unchanged
         </span>
       );
@@ -57,7 +57,7 @@ function FindingStatusBadge({ status }: { status: FindingComparisonStatus }) {
   switch (status) {
     case 'unchanged_finding':
       return (
-        <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-800 text-slate-400 border border-line">
+        <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-black/20 text-slate-400 border border-line">
           Unchanged
         </span>
       );
@@ -133,17 +133,17 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
       <Card ticks>
         <div className="space-y-4">
           <div className="border-b border-line pb-3">
-            <PanelLabel index="04" label="COMPARISON" />
+            <PanelLabel index="04" label="Comparison" />
             <div className="flex items-center gap-2 mt-2">
               <GitCompare className="w-5 h-5 text-slate-400" />
-              <h3 className="text-lg font-semibold text-white">Snapshot Comparison</h3>
+              <h3 className="text-lg font-medium text-white">Snapshot Comparison</h3>
             </div>
           </div>
           <SnapshotStrip snapshots={snapshots} />
           <div className="empty-shell px-5 py-6 flex items-start gap-4">
             <GitCompare className="w-5 h-5 text-slate-600 mt-0.5 shrink-0" />
             <div>
-              <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">Insufficient data</p>
+              <p className="font-data text-[10px] text-slate-500">Insufficient data</p>
               <p className="text-sm font-medium text-slate-300 mt-1.5">At least 2 health snapshots required to compare</p>
               <p className="text-xs text-slate-500 mt-1">
                 {`Currently ${snapshots.length} available. Trigger "Run Health Check" to produce new snapshots for state comparison.`}
@@ -160,8 +160,8 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 border-b border-line pb-4">
           <div>
-            <PanelLabel index="04" label="COMPARISON" />
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2 mt-2">
+            <PanelLabel index="04" label="Comparison" />
+            <h3 className="text-lg font-medium text-white flex items-center gap-2 mt-2">
               <GitCompare className="w-5 h-5 text-slate-400" />
               Snapshot Comparison
             </h3>
@@ -187,9 +187,9 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
         {/* Snapshot Selectors */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Snapshot A (Baseline) */}
-          <div className="bg-slate-900 border border-line rounded-lg p-3 space-y-2">
+          <div className="bg-black/20 border border-line rounded-lg p-3 space-y-2">
             <div className="flex items-center justify-between">
-              <label htmlFor="snapshot-a-select" className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <label htmlFor="snapshot-a-select" className="text-xs font-medium text-slate-400">
                 Snapshot A (Baseline)
               </label>
               {snapshotA && (
@@ -204,7 +204,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
               aria-label="Snapshot A (Baseline)"
               value={snapshotA?.id ?? ''}
               onChange={(e) => setUserSelectedIdA(e.target.value)}
-              className="w-full bg-slate-950 border border-line rounded p-2 text-xs text-slate-200 font-mono focus:border-cyan-500 focus:outline-none"
+              className="w-full bg-black/20 border border-line rounded p-2 text-xs text-slate-200 font-mono focus:border-[#7DB4FF] focus:outline-none"
             >
               {snapshots.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -222,9 +222,9 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
           </div>
 
           {/* Snapshot B (Current) */}
-          <div className="bg-slate-900 border border-line rounded-lg p-3 space-y-2">
+          <div className="bg-black/20 border border-line rounded-lg p-3 space-y-2">
             <div className="flex items-center justify-between">
-              <label htmlFor="snapshot-b-select" className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <label htmlFor="snapshot-b-select" className="text-xs font-medium text-slate-400">
                 Snapshot B (Current)
               </label>
               {snapshotB && (
@@ -239,7 +239,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
               aria-label="Snapshot B (Current)"
               value={snapshotB?.id ?? ''}
               onChange={(e) => setUserSelectedIdB(e.target.value)}
-              className="w-full bg-slate-950 border border-line rounded p-2 text-xs text-slate-200 font-mono focus:border-cyan-500 focus:outline-none"
+              className="w-full bg-black/20 border border-line rounded p-2 text-xs text-slate-200 font-mono focus:border-[#7DB4FF] focus:outline-none"
             >
               {snapshots.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -258,7 +258,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
         </div>
 
         {/* Result blocks: keyed by the selected pair so a new selection replays the reveal. */}
-        <div key={`${activeIdA}:${activeIdB}`} className="diff-reveal space-y-6">
+        <div key={`${activeIdA}:${activeIdB}`} className="space-y-6">
         {/* Compatibility Warning */}
         {comparison && !comparison.comparable && (
           <div
@@ -275,7 +275,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
             />
             <div>
               <p
-                className={`font-semibold ${
+                className={`font-medium ${
                   crossAnalysis?.chainRelation === 'different_chain' ? 'text-red-200' : 'text-amber-200'
                 }`}
               >
@@ -316,14 +316,14 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
         {crossAnalysis && crossAnalysis.findings.length > 0 && (
           <div className="space-y-3">
             <div className="flex items-baseline justify-between gap-3">
-              <h4 className="text-sm font-semibold text-slate-300">Cross-Endpoint Findings</h4>
-              <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">[ Fig. 02 — Endpoint findings ]</span>
+              <h4 className="text-sm font-medium text-slate-300">Cross-Endpoint Findings</h4>
+              <span className="font-data text-[10px] text-slate-600">[ Fig. 02 — Endpoint findings ]</span>
             </div>
             <div className="space-y-2">
               {crossAnalysis.findings.map((f) => (
                 <div
                   key={`${f.ruleId}-${f.title}`}
-                  className="bg-slate-900 border border-line rounded p-3 text-xs space-y-1"
+                  className="bg-black/20 border border-line rounded p-3 text-xs space-y-1"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -331,12 +331,12 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
                       <span className="text-white font-medium">{f.title}</span>
                     </div>
                     <span
-                      className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border ${
+                      className={`text-[10px] font-medium px-1.5 py-0.5 rounded border ${
                         f.severity === 'error'
                           ? 'bg-red-500/20 text-red-400 border-red-500/30'
                           : f.severity === 'warning'
                           ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                          : 'bg-[#0181FB]/15 text-[#7DB4FF] border-[#0181FB]/30'
+                          : 'bg-[#7DB4FF]/15 text-[#7DB4FF] border-[#7DB4FF]/30'
                       }`}
                     >
                       {f.severity}
@@ -360,7 +360,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
         {comparison && crossAnalysis && crossAnalysis.blockDelta.status !== 'unavailable' ? (
           <div className="bg-black/25 border border-line rounded-lg p-4 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+              <span className="text-xs font-medium text-slate-300">
                 Block Height Delta
               </span>
               <span className="text-xs text-slate-400">
@@ -386,7 +386,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
               <div className="text-xs">
                 <span className="text-slate-400">Delta (B - A): </span>
                 {crossAnalysis.blockDelta.status === 'available' && crossAnalysis.blockDelta.delta !== null ? (
-                  <span className="text-gradient font-data font-bold text-base">
+                  <span className="text-[#7DB4FF] font-data font-medium text-base">
                     {crossAnalysis.blockDelta.delta.startsWith('-') ? '' : '+'}
                     {crossAnalysis.blockDelta.delta} blocks
                   </span>
@@ -416,7 +416,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
         ) : comparison && (
           <div className="bg-black/25 border border-line rounded-lg p-4 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+              <span className="text-xs font-medium text-slate-300">
                 Block Height Delta
               </span>
               <span className="text-xs text-slate-400">
@@ -439,7 +439,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
               <div className="text-xs">
                 <span className="text-slate-400">Delta (B - A): </span>
                 {comparison.blockHeightDelta.status === 'available' && comparison.blockHeightDelta.delta !== null ? (
-                  <span className="text-gradient font-data font-bold text-base">
+                  <span className="text-[#7DB4FF] font-data font-medium text-base">
                     {comparison.blockHeightDelta.delta.startsWith('-') ? '' : '+'}
                     {comparison.blockHeightDelta.delta} blocks
                   </span>
@@ -461,12 +461,12 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
         {comparison && (
           <div className="space-y-3">
             <div className="flex items-baseline justify-between gap-3">
-              <h4 className="text-sm font-semibold text-slate-300">Method Checks Diff</h4>
-              <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">[ Fig. 01 — Method diff ]</span>
+              <h4 className="text-sm font-medium text-slate-300">Method Checks Diff</h4>
+              <span className="font-data text-[10px] text-slate-600">[ Fig. 01 — Method diff ]</span>
             </div>
             <div className="overflow-x-auto border border-line rounded-lg">
-              <table className="premium-table premium-table-emerald w-full text-left text-xs border-collapse">
-                <thead className="bg-slate-900 border-b border-line text-slate-400 uppercase text-[10px]">
+              <table className="premium-table w-full text-left text-xs border-collapse">
+                <thead className="bg-black/20 border-b border-line text-slate-400 text-[10px]">
                   <tr>
                     <th className="p-2.5">Method</th>
                     <th className="p-2.5">Status</th>
@@ -475,13 +475,13 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
                     <th className="p-2.5">Latency Delta</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 bg-slate-950/40 font-mono">
+                <tbody className="divide-y divide-line font-mono">
                   {comparison.checks.map((check: ComparedCheck) => {
                     const outcomeChanged = check.a?.outcome !== check.b?.outcome;
                     const valChanged = check.a?.observedValue !== check.b?.observedValue;
 
                     return (
-                      <tr key={check.method} className="hover:bg-slate-900/50">
+                      <tr key={check.method} className="hover:bg-white/[0.03]">
                         <td className="p-2.5 text-slate-200 font-data font-medium">{check.method}</td>
                         <td className="p-2.5">
                           <CheckStatusBadge status={check.status} />
@@ -549,7 +549,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
         {/* Diagnostic Findings Diff */}
         {comparison && (
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-slate-300">Diagnostic Findings Diff</h4>
+            <h4 className="text-sm font-medium text-slate-300">Diagnostic Findings Diff</h4>
             {comparison.findings.length === 0 ? (
               <p className="text-xs text-slate-500 italic">No diagnostic findings recorded in either snapshot.</p>
             ) : (
@@ -559,7 +559,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
                   return (
                     <div
                       key={f.key}
-                      className="bg-slate-900 border border-line rounded p-3 text-xs space-y-1"
+                      className="bg-black/20 border border-line rounded p-3 text-xs space-y-1"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -569,12 +569,12 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
                         </div>
                         {currentFinding && (
                           <span
-                            className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border ${
+                            className={`text-[10px] font-medium px-1.5 py-0.5 rounded border ${
                               currentFinding.severity === 'error'
                                 ? 'bg-red-500/20 text-red-400 border-red-500/30'
                                 : currentFinding.severity === 'warning'
                                 ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                                : 'bg-[#0181FB]/15 text-[#7DB4FF] border-[#0181FB]/30'
+                                : 'bg-[#7DB4FF]/15 text-[#7DB4FF] border-[#7DB4FF]/30'
                             }`}
                           >
                             {currentFinding.severity}
@@ -584,7 +584,7 @@ export function SnapshotComparison({ snapshots }: SnapshotComparisonProps) {
                       <p className="text-slate-400">{currentFinding?.evidence}</p>
                       {f.fieldChanges.length > 0 && (
                         <div className="text-[11px] text-amber-400/90 bg-amber-500/5 p-1.5 rounded mt-1 border border-amber-500/20">
-                          <span className="font-semibold">Modified details: </span>
+                          <span className="font-medium">Modified details: </span>
                           {f.fieldChanges.map((fc) => `${fc.field} (${fc.a} → ${fc.b})`).join(', ')}
                         </div>
                       )}

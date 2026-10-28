@@ -57,13 +57,13 @@ export function EndpointConfig({
 
   return (
     <Card className="relative overflow-hidden">
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[2px] bg-[#0181FB]" />
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[2px] bg-[#7DB4FF]" />
       <div className="space-y-4">
         <div className="flex items-center justify-between gap-3 border-b border-line pb-3 mb-4">
           <div className="flex items-center gap-3">
             <div>
-              <PanelLabel index="01" label="ENDPOINT" />
-              <h3 className="text-lg font-semibold text-white mt-2">RPC Endpoint Configuration</h3>
+              <PanelLabel index="01" label="Endpoint" />
+              <h3 className="text-lg font-medium text-white mt-2">RPC Endpoint Configuration</h3>
             </div>
           </div>
           <div className="text-xs text-slate-400 text-right">
@@ -93,7 +93,7 @@ export function EndpointConfig({
                 onChange={() => onProfileChange('portaldot_v3_evm')}
                 className="peer sr-only"
               />
-              <span className="inline-flex items-center rounded-full border border-line px-3 py-1.5 text-xs text-slate-400 transition-colors hover:border-slate-500 hover:text-slate-200 peer-checked:border-transparent peer-checked:text-white peer-checked:font-medium peer-checked:bg-[#0181FB] peer-focus-visible:ring-2 peer-focus-visible:ring-[#0181FB]/70">
+              <span className="inline-flex items-center rounded-full border border-line px-3 py-1.5 text-xs text-slate-400 transition-colors hover:border-slate-500 hover:text-slate-200 peer-checked:border-transparent peer-checked:text-[#060b1d] peer-checked:font-medium peer-checked:bg-[#7DB4FF] peer-focus-visible:ring-2 peer-focus-visible:ring-[#7DB4FF]/70">
                 Portaldot V3 EVM (HTTP JSON-RPC)
               </span>
             </label>
@@ -105,7 +105,7 @@ export function EndpointConfig({
                 onChange={() => onProfileChange('generic_http')}
                 className="peer sr-only"
               />
-              <span className="inline-flex items-center rounded-full border border-line px-3 py-1.5 text-xs text-slate-400 transition-colors hover:border-slate-500 hover:text-slate-200 peer-checked:border-transparent peer-checked:text-white peer-checked:font-medium peer-checked:bg-[#0181FB] peer-focus-visible:ring-2 peer-focus-visible:ring-[#0181FB]/70">
+              <span className="inline-flex items-center rounded-full border border-line px-3 py-1.5 text-xs text-slate-400 transition-colors hover:border-slate-500 hover:text-slate-200 peer-checked:border-transparent peer-checked:text-[#060b1d] peer-checked:font-medium peer-checked:bg-[#7DB4FF] peer-focus-visible:ring-2 peer-focus-visible:ring-[#7DB4FF]/70">
                 Generic / Substrate HTTP JSON-RPC
               </span>
             </label>
@@ -130,7 +130,7 @@ export function EndpointConfig({
                 className={`w-full bg-black/30 border rounded-lg px-4 py-2.5 text-sm text-white font-data placeholder-slate-500 focus:outline-none focus:ring-2 ${
                   validationError
                     ? 'border-red-500 focus:ring-red-500'
-                    : 'border-line focus:ring-[#0181FB]/70'
+                    : 'border-line focus:ring-[#7DB4FF]/70'
                 } disabled:opacity-50`}
               />
             </div>
@@ -178,7 +178,7 @@ export function EndpointConfig({
         </div>
 
         {evmConnectionDetails && endpointProfile === 'portaldot_v3_evm' && (
-          <div className="bg-slate-950 border border-line rounded-lg p-3 space-y-2">
+          <div className="bg-black/20 border border-line rounded-lg p-3 space-y-2">
             <div className="text-xs font-medium text-slate-300">EVM Endpoint Checks (HTTP JSON-RPC — no WebSocket)</div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
               <div className="bg-black/25 border border-line rounded p-2.5">
@@ -217,7 +217,7 @@ export function EndpointConfig({
         )}
 
         <div className="bg-black/25 border border-line rounded-lg p-3 text-xs text-slate-400 space-y-1">
-          <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-400">CORS & Browser Security Notice</p>
+          <p className="font-data text-[11px] text-slate-400">CORS & Browser Security Notice</p>
           <p>
             Direct browser-to-node requests require the target JSON-RPC node to enable CORS headers (e.g.{' '}
             <code className="text-slate-200">Access-Control-Allow-Origin: *</code>). If you encounter network errors, verify your

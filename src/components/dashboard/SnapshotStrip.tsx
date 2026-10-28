@@ -20,8 +20,8 @@ export function SnapshotStrip({ snapshots }: SnapshotStripProps) {
   return (
     <div>
       <div className="flex items-center justify-between gap-3">
-        <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">Session strip</p>
-        <p className="font-data text-[10px] uppercase tracking-[0.14em] text-slate-600">
+        <p className="font-data text-[10px] text-slate-500">Session strip</p>
+        <p className="font-data text-[10px] text-slate-600">
           {ordered.length} check{ordered.length === 1 ? '' : 's'} this session
         </p>
       </div>

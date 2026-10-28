@@ -146,7 +146,7 @@ export function RpcConsole({ endpoint, isConnected, onRunDiagnostic, isLoading, 
             <PanelLabel index="01" label="RPC CONSOLE" />
             <div className="flex items-center gap-2 mt-2">
               <Terminal className="w-5 h-5 text-slate-400" />
-              <h3 className="text-lg font-semibold text-white">RPC Diagnostic Console</h3>
+              <h3 className="text-lg font-medium text-white">RPC Diagnostic Console</h3>
             </div>
           </div>
           <span className="text-xs text-slate-400">

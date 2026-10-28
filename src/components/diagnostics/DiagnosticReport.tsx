@@ -90,7 +90,7 @@ export function DiagnosticReport({ history, latencyThresholdMs, healthSnapshots 
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 border-b border-line pb-4">
           <div>
             <PanelLabel index="01" label="REPORT" />
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2 mt-2">
+            <h3 className="text-lg font-medium text-white flex items-center gap-2 mt-2">
               <FileText className="w-5 h-5 text-slate-400" />
               Diagnostic Report
             </h3>
@@ -129,19 +129,19 @@ export function DiagnosticReport({ history, latencyThresholdMs, healthSnapshots 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                   <div className="text-xs text-slate-500">Total Records</div>
-                  <div className="text-lg font-semibold text-white font-data">{recordCount}</div>
+                  <div className="text-lg font-medium text-white font-data">{recordCount}</div>
                 </div>
                 <div>
                   <div className="text-xs text-slate-500">Success</div>
-                  <div className="text-lg font-semibold text-emerald-400 font-data">{successCount}</div>
+                  <div className="text-lg font-medium text-emerald-400 font-data">{successCount}</div>
                 </div>
                 <div>
                   <div className="text-xs text-slate-500">Unsupported Methods</div>
-                  <div className="text-lg font-semibold text-amber-400 font-data">{unsupportedCount}</div>
+                  <div className="text-lg font-medium text-amber-400 font-data">{unsupportedCount}</div>
                 </div>
                 <div>
                   <div className="text-xs text-slate-500">Network/HTTP Errors</div>
-                  <div className="text-lg font-semibold text-red-400 font-data">{networkErrorCount}</div>
+                  <div className="text-lg font-medium text-red-400 font-data">{networkErrorCount}</div>
                 </div>
               </div>
               <div className="mt-4 pt-3 border-t border-line text-xs">
@@ -149,7 +149,7 @@ export function DiagnosticReport({ history, latencyThresholdMs, healthSnapshots 
                   <p className="text-slate-400">
                     Session verdict:{' '}
                     <span
-                      className={`font-data font-semibold ${
+                      className={`font-data font-medium ${
                         sessionTrends.verdict.level === 'healthy'
                           ? 'text-emerald-400'
                           : sessionTrends.verdict.level === 'degraded'
@@ -202,19 +202,19 @@ export function DiagnosticReport({ history, latencyThresholdMs, healthSnapshots 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                   <div>
                     <div className="text-xs text-slate-500">Total Findings</div>
-                    <div className="text-lg font-semibold text-white font-data">{totalFindings}</div>
+                    <div className="text-lg font-medium text-white font-data">{totalFindings}</div>
                   </div>
                   <div>
                     <div className="text-xs text-slate-500">Errors</div>
-                    <div className="text-lg font-semibold text-red-400 font-data">{errorFindings}</div>
+                    <div className="text-lg font-medium text-red-400 font-data">{errorFindings}</div>
                   </div>
                   <div>
                     <div className="text-xs text-slate-500">Warnings</div>
-                    <div className="text-lg font-semibold text-amber-400 font-data">{warningFindings}</div>
+                    <div className="text-lg font-medium text-amber-400 font-data">{warningFindings}</div>
                   </div>
                   <div>
                     <div className="text-xs text-slate-500">Info</div>
-                    <div className="text-lg font-semibold text-[#7DB4FF] font-data">{infoFindings}</div>
+                    <div className="text-lg font-medium text-[#7DB4FF] font-data">{infoFindings}</div>
                   </div>
                 </div>
                 <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">
@@ -243,7 +243,7 @@ export function DiagnosticReport({ history, latencyThresholdMs, healthSnapshots 
           <div className="empty-shell px-5 py-6 flex items-start gap-4">
             <FileText className="w-5 h-5 text-slate-600 mt-0.5 shrink-0" />
             <div>
-              <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">No records</p>
+              <p className="font-data text-[10px] text-slate-500">No records</p>
               <p className="text-sm text-slate-400 mt-1.5">No diagnostic history in this session yet.</p>
             </div>
           </div>

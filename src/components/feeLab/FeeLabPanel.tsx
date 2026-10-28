@@ -104,7 +104,7 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
         onChange={(e) => onChange(e.target.value)}
         spellCheck={false}
         autoComplete="off"
-        className="mt-1.5 w-full bg-black/30 border border-line rounded-lg px-4 py-2.5 text-sm text-white font-data placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#0181FB]/70"
+        className="mt-1.5 w-full bg-black/30 border border-line rounded-lg px-4 py-2.5 text-sm text-white font-data placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#7DB4FF]/70"
       />
     </div>
   );
@@ -357,12 +357,12 @@ export function FeeLabPanel() {
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-2xl border border-line bg-black/25 p-4">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-sm font-semibold text-[#7DB4FF]">{p.evmSurface}</span>
-              {c.recommended === 'evm' && <span className="rounded-full bg-[#0181FB]/15 px-2 py-0.5 text-[11px] font-semibold text-[#7DB4FF]">{p.cheaper}</span>}
+              <span className="text-sm font-medium text-[#7DB4FF]">{p.evmSurface}</span>
+              {c.recommended === 'evm' && <span className="rounded-full bg-[#7DB4FF]/15 px-2 py-0.5 text-[11px] font-medium text-[#7DB4FF]">{p.cheaper}</span>}
             </div>
             {c.evm.status === 'ok' ? (
               <>
-                <div className="mt-2 text-2xl font-semibold tabular-nums text-white">{tpot(c.evm.totalPlanck, d)} <span className="text-sm text-slate-400">tPOT</span></div>
+                <div className="mt-2 text-2xl font-medium tabular-nums text-white">{tpot(c.evm.totalPlanck, d)} <span className="text-sm text-slate-400">tPOT</span></div>
                 <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs text-slate-400">
                   <dt>method</dt><dd className="font-data text-slate-100">{c.evm.method}</dd>
                   <dt>gas</dt><dd className="font-data text-slate-100">{c.evm.gas.toString()}</dd>
@@ -373,19 +373,19 @@ export function FeeLabPanel() {
               </>
             ) : (
               <div className="mt-2">
-                <div className="text-2xl font-semibold text-slate-500">{p.unavailable}</div>
+                <div className="text-2xl font-medium text-slate-500">{p.unavailable}</div>
                 <p className="mt-2 text-xs text-slate-400"><span className="font-data">{c.evm.method}</span>: {c.evm.reason}</p>
               </div>
             )}
           </div>
           <div className="rounded-2xl border border-line bg-black/25 p-4">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-sm font-semibold text-emerald-300">{p.nativeSurface}</span>
-              {c.recommended === 'native' && <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[11px] font-semibold text-emerald-300">{p.cheaper}</span>}
+              <span className="text-sm font-medium text-emerald-300">{p.nativeSurface}</span>
+              {c.recommended === 'native' && <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[11px] font-medium text-emerald-300">{p.cheaper}</span>}
             </div>
             {c.native.status === 'ok' ? (
               <>
-                <div className="mt-2 text-2xl font-semibold tabular-nums text-white">{tpot(c.native.totalPlanck, d)} <span className="text-sm text-slate-400">tPOT</span></div>
+                <div className="mt-2 text-2xl font-medium tabular-nums text-white">{tpot(c.native.totalPlanck, d)} <span className="text-sm text-slate-400">tPOT</span></div>
                 <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs text-slate-400">
                   <dt>method</dt><dd className="font-data text-slate-100">{c.native.method}</dd>
                   <dt>partialFee</dt><dd className="font-data text-slate-100">{tpot(c.native.partialFee, d, 8)} tPOT</dd>
@@ -396,7 +396,7 @@ export function FeeLabPanel() {
               </>
             ) : (
               <div className="mt-2">
-                <div className="text-2xl font-semibold text-slate-500">{p.unavailable}</div>
+                <div className="text-2xl font-medium text-slate-500">{p.unavailable}</div>
                 <p className="mt-2 text-xs text-slate-400"><span className="font-data">{c.native.method}</span>: {c.native.reason}</p>
               </div>
             )}
@@ -404,25 +404,25 @@ export function FeeLabPanel() {
         </div>
         <div className="bg-panel border border-line rounded-xl p-4 grid gap-3 sm:grid-cols-3">
           <div>
-            <div className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500">{p.recPath}</div>
-            <div className="text-lg font-semibold text-white">{rec}</div>
+            <div className="font-data text-[11px] text-slate-500">{p.recPath}</div>
+            <div className="text-lg font-medium text-white">{rec}</div>
           </div>
           <div>
-            <div className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500">{p.ratioAllIn}</div>
-            <div className="text-lg font-semibold tabular-nums text-white">{fmtRatio(c.ratioAllIn)}</div>
+            <div className="font-data text-[11px] text-slate-500">{p.ratioAllIn}</div>
+            <div className="text-lg font-medium tabular-nums text-white">{fmtRatio(c.ratioAllIn)}</div>
             <div className="text-[11px] text-slate-500">{p.ratioAllInNote}</div>
           </div>
           <div>
-            <div className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500">{p.ratioFeeOnly}</div>
-            <div className="text-lg font-semibold tabular-nums text-white">{fmtRatio(c.ratioVsNativeFeeOnly)}</div>
+            <div className="font-data text-[11px] text-slate-500">{p.ratioFeeOnly}</div>
+            <div className="text-lg font-medium tabular-nums text-white">{fmtRatio(c.ratioVsNativeFeeOnly)}</div>
             <div className="text-[11px] text-slate-500">{p.ratioFeeOnlyNote}</div>
           </div>
           <p className="text-xs text-slate-400 sm:col-span-3">{displayReason(c, p)} {p.measured} {new Date(c.measuredAt).toLocaleString()}.</p>
         </div>
         {c.evm.status === 'ok' && c.native.status === 'ok' && (
           <div className="bg-panel border border-line rounded-xl p-4 grid gap-4">
-            <div className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500">{p.breakTitle}</div>
-            <BreakdownBar label={p.breakEvm} total={c.evm.totalPlanck} d={d} parts={[mk(c.evm.totalPlanck, 'bg-[#0181FB]', p.breakEvmGas)]} />
+            <div className="font-data text-[11px] text-slate-500">{p.breakTitle}</div>
+            <BreakdownBar label={p.breakEvm} total={c.evm.totalPlanck} d={d} parts={[mk(c.evm.totalPlanck, 'bg-[#7DB4FF]', p.breakEvmGas)]} />
             <BreakdownBar label={p.breakNativeFee} total={c.native.partialFee} d={d} parts={[mk(c.native.partialFee, 'bg-emerald-400', p.breakNativeFeePart)]} />
             <BreakdownBar label={p.breakNativeAllIn} total={c.native.totalPlanck} d={d} parts={[mk(c.native.partialFee, 'bg-emerald-400', p.breakNativeFeePart), mk(c.native.storageDeposit, 'bg-amber-400', p.breakDepositPart)]} />
             <p className="text-sm text-slate-400">
@@ -443,13 +443,13 @@ export function FeeLabPanel() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3 pt-1">
         <div>
-          <p className="font-data text-[11px] uppercase tracking-[0.22em] text-slate-500">{p.kicker}</p>
-          <h2 className="text-3xl font-bold tracking-tight text-white mt-1.5">
+          <p className="font-data text-[11px] text-slate-500">{p.kicker}</p>
+          <h2 className="text-3xl font-medium tracking-tight text-white mt-1.5">
             {p.title}
           </h2>
         </div>
         <div className="flex flex-wrap items-center gap-3 pb-1">
-          <p className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500">Portaldot V3 · Chain {PORTALDOT_CHAIN_ID}</p>
+          <p className="font-data text-[11px] text-slate-500">Portaldot V3 · Chain {PORTALDOT_CHAIN_ID}</p>
           <span className="flex shrink-0 items-center gap-1 rounded-full border border-line bg-black/30 p-1" role="group" aria-label={p.langGroupAria}>
             {(['en', 'id'] as Lang[]).map((l) => (
               <button
@@ -458,7 +458,7 @@ export function FeeLabPanel() {
                 aria-label={l === 'en' ? 'EN (English)' : 'ID (Bahasa Indonesia)'}
                 aria-pressed={lang === l}
                 onClick={() => setLang(l)}
-                className={`rounded-full px-2.5 py-1 font-data text-[10px] uppercase tracking-[0.14em] transition-colors ${lang === l ? 'bg-[#0181FB] text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`rounded-full px-2.5 py-1 font-data text-[10px] transition-colors ${lang === l ? 'bg-[#7DB4FF] text-[#060b1d]' : 'text-slate-400 hover:text-white'}`}
               >
                 {l.toUpperCase()}
               </button>
@@ -494,7 +494,7 @@ export function FeeLabPanel() {
               tabIndex={op === o.id ? 0 : -1}
               onClick={() => { setOp(o.id); setResult(null); }}
               className={`rounded-xl px-3 py-2 text-sm transition ${
-                op === o.id ? 'bg-[#0181FB] font-semibold text-white' : 'border border-line text-slate-400 hover:text-slate-200'
+                op === o.id ? 'bg-[#7DB4FF] font-medium text-white' : 'border border-line text-slate-400 hover:text-slate-200'
               }`}
             >
               {o.label}
@@ -527,7 +527,7 @@ export function FeeLabPanel() {
                   type="button"
                   onClick={() => { setCodeChoice(choice); setResult(null); }}
                   className={`rounded-full border px-3 py-1.5 text-xs transition ${
-                    codeChoice === choice ? 'border-[#0181FB] text-white font-medium' : 'border-line text-slate-400 hover:text-slate-200'
+                    codeChoice === choice ? 'border-[#7DB4FF] text-white font-medium' : 'border-line text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   {choice === 'sample' ? p.codeSample.replace('{bytes}', String((SampleTokenBytecode.length - 2) / 2)) : choice === 'registry' ? p.codeRegistry.replace('{bytes}', String((FeeRegistryBytecode.length - 2) / 2)) : p.codeCustom}
@@ -543,7 +543,7 @@ export function FeeLabPanel() {
                     onChange={(e) => setCustomCode(e.target.value)}
                     spellCheck={false}
                     placeholder="0x6080…"
-                    className="mt-1.5 w-full h-28 resize-y bg-black/30 border border-line rounded-lg px-4 py-2.5 text-sm text-white font-data placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#0181FB]/70"
+                    className="mt-1.5 w-full h-28 resize-y bg-black/30 border border-line rounded-lg px-4 py-2.5 text-sm text-white font-data placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#7DB4FF]/70"
                   />
                 </div>
                 <Field label={p.constructorLabel} value={constructorData} onChange={setConstructorData} />
@@ -587,7 +587,7 @@ export function FeeLabPanel() {
                 value={callData}
                 onChange={(e) => setCallData(e.target.value)}
                 spellCheck={false}
-                className="mt-1.5 w-full h-24 resize-y bg-black/30 border border-line rounded-lg px-4 py-2.5 text-sm text-white font-data placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#0181FB]/70"
+                className="mt-1.5 w-full h-24 resize-y bg-black/30 border border-line rounded-lg px-4 py-2.5 text-sm text-white font-data placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#7DB4FF]/70"
               />
             </div>
           </>

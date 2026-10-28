@@ -42,13 +42,11 @@ function useOneShot(measure: () => Promise<string>) {
 
 function PillarCard({
   copy,
-  accent,
   measure,
   valueTestId,
   autoMeasure = true,
 }: {
   copy: PillarCardCopy;
-  accent: 'blue' | 'amber';
   measure: () => Promise<string>;
   valueTestId: string;
   /**
@@ -80,26 +78,29 @@ function PillarCard({
     // run is stable-by-ref-guard (startedRef); intentionally not a dep.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const accentText = accent === 'amber' ? 'text-amber-300' : 'text-[#7DB4FF]';
-  const accentBorder = accent === 'amber' ? 'border-amber-400/30' : 'border-[#0181FB]/30';
   return (
-    <div ref={ref} className={`min-w-0 rounded-3xl border ${accentBorder} bg-panel p-6 md:p-7`}>
-      <p className={`font-data text-[11px] uppercase tracking-[0.22em] ${accentText}`}>{copy.kicker}</p>
-      <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight text-white">{copy.title}</h3>
-      <p className="mt-2.5 text-sm leading-relaxed text-slate-400">{copy.body}</p>
-      <div className="mt-5 min-h-[64px] rounded-2xl border border-line bg-black/25 px-4 py-3.5">
+    <div ref={ref} className="border-b border-line py-8 md:grid md:grid-cols-12 md:gap-8">
+      <div className="md:col-span-7">
+        <p className="text-sm text-slate-400">{copy.kicker}</p>
+        <h3 className="mt-2 text-xl font-medium text-white">{copy.title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-slate-400">{copy.body}</p>
+        <a href={copy.ctaHref} className="mt-4 inline-block text-sm font-medium text-[#7DB4FF] transition-colors hover:text-white">
+          {copy.ctaLabel} →
+        </a>
+      </div>
+      <div className="mt-5 md:col-span-5 md:mt-0">
         {state.kind === 'idle' && (
-          <button type="button" onClick={run} className="btn-primary rounded-lg px-4 py-2 text-sm font-medium">
+          <button type="button" onClick={run} className="rounded-lg bg-[#7DB4FF] px-4 py-2 text-sm font-medium text-[#060b1d] transition hover:brightness-110">
             {copy.measureLabel}
           </button>
         )}
         {state.kind === 'measuring' && <p className="text-sm text-slate-400">{copy.measuringLabel}</p>}
         {state.kind === 'done' && (
           <div>
-            <p data-testid={valueTestId} className="font-data text-2xl font-semibold tabular-nums text-white">
+            <p data-testid={valueTestId} className="font-data text-2xl tabular-nums text-white">
               {state.value}
             </p>
-            <p className="mt-1 text-[11px] text-slate-500">
+            <p className="mt-1 text-xs text-slate-500">
               {copy.measuredLabel} {state.at.toLocaleTimeString('en-GB', { hour12: false, timeZone: 'Asia/Jakarta' })} WIB
             </p>
           </div>
@@ -107,15 +108,12 @@ function PillarCard({
         {state.kind === 'error' && (
           <div className="flex flex-wrap items-center gap-3">
             <p className="text-sm text-amber-300">{copy.unavailableLabel}</p>
-            <button type="button" onClick={run} className="btn-ghost rounded-lg px-3 py-1.5 text-sm">
+            <button type="button" onClick={run} className="rounded-lg border border-line px-3 py-1.5 text-sm text-slate-200 transition-colors hover:text-white">
               {copy.measureLabel}
             </button>
           </div>
         )}
       </div>
-      <a href={copy.ctaHref} className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-slate-200 underline decoration-slate-600 underline-offset-4 transition-colors hover:text-white">
-        {copy.ctaLabel} →
-      </a>
     </div>
   );
 }
@@ -132,9 +130,9 @@ export function PillarCards({
   feesMeasure?: () => Promise<string>;
 }) {
   return (
-    <div className="grid min-w-0 gap-5 md:grid-cols-2">
-      <PillarCard copy={health} accent="blue" measure={healthMeasure} valueTestId="health-proof-value" />
-      <PillarCard copy={fees} accent="amber" measure={feesMeasure} valueTestId="fees-proof-value" autoMeasure={false} />
+    <div className="border-t border-line">
+      <PillarCard copy={health} measure={healthMeasure} valueTestId="health-proof-value" />
+      <PillarCard copy={fees} measure={feesMeasure} valueTestId="fees-proof-value" autoMeasure={false} />
     </div>
   );
 }

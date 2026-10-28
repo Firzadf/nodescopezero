@@ -68,20 +68,20 @@ function FindingSeverityBadge({ severity }: { severity: Finding['severity'] }) {
   switch (severity) {
     case 'error':
       return (
-        <span className="text-xs font-semibold px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30">
+        <span className="text-xs font-medium px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30">
           ERROR
         </span>
       );
     case 'warning':
       return (
-        <span className="text-xs font-semibold px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">
+        <span className="text-xs font-medium px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">
           WARNING
         </span>
       );
     case 'info':
     default:
       return (
-        <span className="text-xs font-semibold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+        <span className="text-xs font-medium px-2 py-0.5 rounded bg-[#7DB4FF]/15 text-[#7DB4FF] border border-[#7DB4FF]/30">
           INFO
         </span>
       );
@@ -120,8 +120,8 @@ export function HealthCheckPanel({
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 border-b border-line pb-4">
           <div>
-            <PanelLabel index="03" label="HEALTH CHECK" />
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2 mt-2">
+            <PanelLabel index="03" label="Health check" />
+            <h3 className="text-lg font-medium text-white flex items-center gap-2 mt-2">
               <Activity className="w-5 h-5 text-slate-400" />
               Node Health Check
             </h3>
@@ -156,7 +156,7 @@ export function HealthCheckPanel({
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-xs text-amber-300 flex items-start gap-2.5">
             <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="font-data text-[10px] uppercase tracking-[0.2em] text-amber-400/90">Status — Not connected</p>
+              <p className="font-data text-[10px] text-amber-400/90">Status — Not connected</p>
               <p className="mt-1">Node is not marked as connected. You can still run explicit health checks to inspect endpoint behavior.</p>
             </div>
           </div>
@@ -164,7 +164,7 @@ export function HealthCheckPanel({
 
         {isLoading && (
           <div className="space-y-1.5" aria-live="polite">
-            <p className="font-data text-[10px] uppercase tracking-[0.2em] text-slate-500">
+            <p className="font-data text-[10px] text-slate-500">
               Running methods — each row turns PASS or FAIL as its call returns
             </p>
             {methods.map((method) => {
@@ -193,7 +193,7 @@ export function HealthCheckPanel({
           <div className="empty-shell px-5 py-6 flex items-start gap-4">
             <Activity className="w-5 h-5 text-slate-600 mt-0.5 shrink-0" />
             <div>
-              <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">No data yet</p>
+              <p className="font-data text-[10px] text-slate-500">No data yet</p>
               <p className="text-sm font-medium text-slate-300 mt-1.5">No health check performed in this session yet.</p>
               <p className="text-xs text-slate-500 mt-1">
                 Click &quot;Run Health Check&quot; above to query known read-only endpoints for the active profile.
@@ -224,11 +224,11 @@ export function HealthCheckPanel({
               </div>
 
               <h4 className="text-sm font-medium text-slate-300 mb-3">Individual Check Results</h4>
-              <div className="stagger grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {latestSnapshot.checks.map((check: HealthCheckCheck) => (
                   <div
                     key={check.method}
-                    className="bg-slate-900 border border-line rounded-lg p-3 text-xs space-y-1.5"
+                    className="bg-black/20 border border-line rounded-lg p-3 text-xs space-y-1.5"
                   >
                     <div className="flex items-center justify-between">
                       <code className="text-cyan-400 font-mono font-medium">{check.method}</code>
@@ -261,7 +261,7 @@ export function HealthCheckPanel({
                   {latestSnapshot.findings.map((f: Finding, idx: number) => (
                     <div
                       key={`${f.ruleId}-${idx}`}
-                      className="bg-slate-900 border border-line rounded p-3 text-xs space-y-1"
+                      className="bg-black/20 border border-line rounded p-3 text-xs space-y-1"
                     >
                       <div className="flex items-center gap-2">
                         <FindingSeverityBadge severity={f.severity} />
@@ -277,7 +277,7 @@ export function HealthCheckPanel({
               </div>
             )}
 
-            <div className="bg-slate-900/40 border border-line/60 rounded-lg p-3 text-[11px] text-slate-400">
+            <div className="bg-black/20 border border-line/60 rounded-lg p-3 text-[11px] text-slate-400">
               <span className="font-medium text-slate-300">Observation note: </span>
               A successful block height query confirms single-measurement retrieval only. It does not prove active synchronization or continuous block production.
             </div>

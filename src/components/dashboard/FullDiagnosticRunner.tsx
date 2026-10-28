@@ -174,7 +174,7 @@ export function FullDiagnosticRunner({
       <div className="space-y-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h3 className="text-lg font-semibold text-white">Run full diagnostic</h3>
+            <h3 className="text-lg font-medium text-white">Run full diagnostic</h3>
             <p className="mt-1 text-xs leading-relaxed text-slate-400">
               Connect, health check, capability discovery, Substrate probe, snapshot, combined
               verdict — in order, using the same checks as the panels below. User-triggered only,
@@ -185,7 +185,7 @@ export function FullDiagnosticRunner({
             type="button"
             onClick={() => void run()}
             disabled={running}
-            className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-[#0181FB] px-4 py-2.5 text-sm font-semibold text-white transition-opacity disabled:opacity-50"
+            className="inline-flex shrink-0 items-center gap-2 rounded-lg bg-[#7DB4FF] px-4 py-2.5 text-sm font-medium text-[#060b1d] transition-opacity disabled:opacity-50"
           >
             {running ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4" />}
             {running ? 'Running…' : 'Run full diagnostic'}
@@ -200,7 +200,7 @@ export function FullDiagnosticRunner({
               ) : step.status === 'failed' ? (
                 <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
               ) : step.status === 'running' ? (
-                <Loader2 className="mt-0.5 h-4 w-4 shrink-0 animate-spin text-sky-400" />
+                <Loader2 className="mt-0.5 h-4 w-4 shrink-0 animate-spin text-[#7DB4FF]" />
               ) : (
                 <Circle className="mt-0.5 h-4 w-4 shrink-0 text-slate-600" />
               )}
@@ -216,7 +216,7 @@ export function FullDiagnosticRunner({
 
         {ticker.length > 0 && (
           <div className="rounded-lg border border-line bg-black/25 p-3">
-            <p className="font-data text-[10px] uppercase tracking-[0.2em] text-slate-500">
+            <p className="font-data text-[10px] text-slate-500">
               Blocks read during this run — not a live feed, no polling
             </p>
             <ul className="mt-2 space-y-1">
@@ -239,7 +239,7 @@ export function FullDiagnosticRunner({
             <button
               type="button"
               onClick={onGoHistory}
-              className="rounded-lg bg-[#0181FB] px-4 py-2 text-sm font-semibold text-white"
+              className="rounded-lg bg-[#7DB4FF] px-4 py-2 text-sm font-medium text-[#060b1d]"
             >
               Export report
             </button>

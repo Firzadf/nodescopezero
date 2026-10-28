@@ -29,7 +29,7 @@ function LineChart({
   if (series.length < 2) {
     return (
       <div>
-        <h5 className="text-sm font-semibold text-slate-300">{title}</h5>
+        <h5 className="text-sm font-medium text-slate-300">{title}</h5>
         <p className="mt-1 text-xs text-slate-500">{emptyNote}</p>
       </div>
     );
@@ -55,7 +55,7 @@ function LineChart({
   const last = series[series.length - 1];
   return (
     <div>
-      <h5 className="text-sm font-semibold text-slate-300">{title}</h5>
+      <h5 className="text-sm font-medium text-slate-300">{title}</h5>
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className="mt-2 w-full rounded-lg border border-line bg-black/25"
@@ -63,9 +63,9 @@ function LineChart({
         aria-label={`${title}: ${series.length} points from ${clock(first.timestamp)} to ${clock(last.timestamp)}`}
       >
         <title>{`${title}: ${series.length} points`}</title>
-        <path d={path} fill="none" stroke="#0181FB" strokeWidth="2" />
+        <path d={path} fill="none" stroke="#7DB4FF" strokeWidth="2" />
         {series.map((p) => (
-          <circle key={`${p.timestamp}-${p.value}`} cx={x(p.timestamp)} cy={y(p.value)} r="4" fill="#0181FB" />
+          <circle key={`${p.timestamp}-${p.value}`} cx={x(p.timestamp)} cy={y(p.value)} r="4" fill="#7DB4FF" />
         ))}
         <text x={padLeft} y={height - 6} fill="#64748b" fontSize="11">
           {clock(first.timestamp)}

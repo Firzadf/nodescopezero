@@ -18,9 +18,9 @@ export function VerifyPage() {
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3">
           <a href="/" className="flex items-center gap-2.5">
             <img src="/logo.png" alt="NodeScope logo" className="h-7 w-7 rounded-lg" />
-            <span className="font-display text-[17px] font-semibold tracking-tight text-white">NodeScope</span>
+            <span className="text-[17px] font-medium tracking-tight text-white">NodeScope</span>
           </a>
-          <nav className="flex items-center gap-5 font-data text-[11px] uppercase tracking-[0.18em] text-slate-400">
+          <nav className="flex items-center gap-5 text-sm text-slate-400">
             <a href="/" className="transition-colors hover:text-white">Landing</a>
             <a href="/app" className="transition-colors hover:text-white">Launch App</a>
             <a href="/mainnet" className="transition-colors hover:text-white">Mainnet Profile</a>
@@ -30,8 +30,8 @@ export function VerifyPage() {
         </div>
       </header>
       <main className="mx-auto max-w-4xl px-4 py-10">
-        <p className="font-data text-[11px] uppercase tracking-[0.22em] text-slate-500">NodeScope / Verify</p>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-white">
+        <p className="text-xs text-slate-500">NodeScope / Verify</p>
+        <h1 className="mt-2 text-[22px] font-medium tracking-tight text-white">
           Check a report, without an account.
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">

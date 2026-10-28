@@ -72,7 +72,7 @@ export function CapabilityDiscoveryPanel({ endpoint, snapshot, onSnapshotChange,
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 border-b border-line pb-4">
           <div>
             <PanelLabel index="08" label="CAPABILITIES" />
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2 mt-2">
+            <h3 className="text-lg font-medium text-white flex items-center gap-2 mt-2">
               <Search className="w-5 h-5 text-slate-400" />
               RPC Capability Discovery
             </h3>
@@ -97,7 +97,7 @@ export function CapabilityDiscoveryPanel({ endpoint, snapshot, onSnapshotChange,
 
         {!snapshot && !loading && (
           <div className="empty-shell px-5 py-4">
-            <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">Not queried</p>
+            <p className="font-data text-[10px] text-slate-500">Not queried</p>
             <p className="text-xs text-slate-500 mt-1.5">No discovery attempted. Click Discover Capabilities to query this endpoint.</p>
           </div>
         )}

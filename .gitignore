@@ -31,3 +31,6 @@ cache/
 *.njsproj
 *.sln
 *.sw?
+
+# Redesign working notes (local only, never shipped)
+.taste-skill/

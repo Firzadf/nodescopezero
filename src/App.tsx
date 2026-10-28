@@ -362,18 +362,18 @@ function App() {
       />
       <div className="flex">
         <Sidebar activeSection={activeSection} onSectionChange={handleSectionChange} onOpenPalette={() => setPaletteOpen(true)} collapsed={sidebarCollapsed} onToggleCollapse={toggleSidebar} />
-        <main className="relative min-w-0 flex-1 p-6">
+        <main className="relative min-w-0 flex-1 rounded-2xl border border-line bg-panel p-6 mr-2 mb-2">
           <div className="relative max-w-7xl mx-auto space-y-6">
             {activeSection === 'overview' && (
-              <div className="space-y-6 stagger">
+              <div className="space-y-6">
                 <div className="relative z-10 flex flex-wrap items-end justify-between gap-3 bg-ink pt-1">
                   <div>
-                    <p className="font-data text-[11px] uppercase tracking-[0.22em] text-slate-500">NodeScope / Overview</p>
-                    <h2 className="text-3xl font-bold tracking-tight text-white mt-1.5 [text-decoration:none]">
+                    <p className="text-xs text-slate-500">NodeScope / Overview</p>
+                    <h2 className="text-[22px] font-medium tracking-tight text-white mt-1.5 [text-decoration:none]">
                       Node health, proven over time.
                     </h2>
                   </div>
-                  <p className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500 pb-1">Portaldot V3 EVM · Chain 420420777</p>
+                  <p className="text-xs text-slate-500 pb-1">Portaldot V3 EVM · Chain 420420777</p>
                 </div>
                 <FullDiagnosticRunner
                   endpoint={endpoint}
@@ -418,15 +418,15 @@ function App() {
               </div>
             )}
             {activeSection === 'diagnostics' && (
-              <div className="space-y-6 stagger">
+              <div className="space-y-6">
                 <div className="flex flex-wrap items-end justify-between gap-3 pt-1">
                   <div>
-                    <p className="font-data text-[11px] uppercase tracking-[0.22em] text-slate-500">NodeScope / RPC Diagnostics</p>
-                    <h2 className="text-3xl font-bold tracking-tight text-white mt-1.5">
+                    <p className="text-xs text-slate-500">NodeScope / RPC Diagnostics</p>
+                    <h2 className="text-[22px] font-medium tracking-tight text-white mt-1.5">
                       Ask the node. Keep the receipt.
                     </h2>
                   </div>
-                  <p className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500 pb-1">Manual JSON-RPC · User-triggered only</p>
+                  <p className="text-xs text-slate-500 pb-1">Manual JSON-RPC · User-triggered only</p>
                 </div>
                 <RpcConsole
                   endpoint={endpoint}
@@ -472,22 +472,22 @@ function App() {
               </div>
             )}
             {activeSection === 'fee-lab' && (
-              <div className="space-y-6 stagger">
+              <div className="space-y-6">
                 <Suspense fallback={<div className="empty-shell p-4"><p className="text-sm text-slate-400">Loading Fee Lab…</p></div>}>
                   <FeeLabPanel />
                 </Suspense>
               </div>
             )}
             {activeSection === 'history' && (
-              <div className="space-y-6 stagger">
+              <div className="space-y-6">
                 <div className="flex flex-wrap items-end justify-between gap-3 pt-1">
                   <div>
-                    <p className="font-data text-[11px] uppercase tracking-[0.22em] text-slate-500">NodeScope / History</p>
-                    <h2 className="text-3xl font-bold tracking-tight text-white mt-1.5">
+                    <p className="text-xs text-slate-500">NodeScope / History</p>
+                    <h2 className="text-[22px] font-medium tracking-tight text-white mt-1.5">
                       Every check, on record.
                     </h2>
                   </div>
-                  <p className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500 pb-1">Session ledger · Exportable JSON</p>
+                  <p className="text-xs text-slate-500 pb-1">Session ledger · Exportable JSON</p>
                 </div>
                 <DiagnosticReport history={history} healthSnapshots={healthSnapshots} wsProbeResult={wsProbeResult} onExported={() => pushToast('Report exported — verify it on /verify')} />
                 <HistoryList
@@ -511,13 +511,13 @@ function App() {
       <TerminalFeed history={history} />
       <footer className="border-t border-line">
         <div className="px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
-          <p className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500">
+          <p className="text-xs text-slate-500">
             NodeScope — Built for Portaldot Hacker House 2026
           </p>
-          <p className="hidden lg:block font-data text-[11px] uppercase tracking-[0.18em] text-slate-600">
+          <p className="hidden lg:block text-xs text-slate-600">
             Report schema · nodescope.diagnostic-report.v1
           </p>
-          <div className="flex items-center gap-5 font-data text-[11px] uppercase tracking-[0.18em]">
+          <div className="flex items-center gap-5 text-xs">
             <a href="https://github.com/Firzadf/nodescope" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors">
               GitHub
             </a>

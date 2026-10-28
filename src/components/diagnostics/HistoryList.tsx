@@ -27,11 +27,11 @@ export function HistoryList({ history, onSelect, onClear }: HistoryListProps) {
     return (
       <Card ticks>
         <PanelLabel index="02" label="HISTORY" />
-        <h3 className="text-lg font-semibold text-white mt-2">Diagnostic History</h3>
+        <h3 className="text-lg font-medium text-white mt-2">Diagnostic History</h3>
         <div className="empty-shell px-5 py-6 flex items-start gap-4 mt-4">
           <Clock className="w-5 h-5 text-slate-600 mt-0.5 shrink-0" />
           <div>
-            <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">Empty ledger</p>
+            <p className="font-data text-[10px] text-slate-500">Empty ledger</p>
             <p className="text-sm text-slate-400 mt-1.5">No diagnostic history in this session yet.</p>
             <p className="text-xs text-slate-500 mt-1">Run a diagnostic from the RPC Diagnostics tab and results will appear here.</p>
           </div>
@@ -51,7 +51,7 @@ export function HistoryList({ history, onSelect, onClear }: HistoryListProps) {
             <PanelLabel index="02" label="HISTORY" />
             <div className="flex items-center gap-2 mt-2">
               <Clock className="w-5 h-5 text-slate-400" />
-              <h3 className="text-lg font-semibold text-white">Diagnostic History</h3>
+              <h3 className="text-lg font-medium text-white">Diagnostic History</h3>
             </div>
           </div>
           <button
@@ -63,8 +63,8 @@ export function HistoryList({ history, onSelect, onClear }: HistoryListProps) {
         </div>
 
         <div className="flex items-center justify-between gap-3 border-y border-line py-2">
-          <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">[ Fig. 03 — Session ledger ]</span>
-          <span className="font-data text-[10px] uppercase tracking-[0.14em] text-slate-500">
+          <span className="font-data text-[10px] text-slate-600">[ Fig. 03 — Session ledger ]</span>
+          <span className="font-data text-[10px] text-slate-500">
             {history.length} records · {successCount} success · {failedCount} failed
           </span>
         </div>
@@ -112,13 +112,13 @@ export function HistoryList({ history, onSelect, onClear }: HistoryListProps) {
           aria-label={`Receipt for ${detail.request.method}`}
         >
           <div
-            className="max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-[20px] border border-line bg-panel p-5 shadow-[0_40px_90px_rgba(0,0,0,0.6)]"
+            className="max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-line bg-panel p-5 shadow-[0_40px_90px_rgba(0,0,0,0.6)]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">Record receipt</p>
-                <h3 className="mt-1 font-data text-lg font-semibold text-white">{detail.request.method}</h3>
+                <p className="font-data text-[10px] text-slate-500">Record receipt</p>
+                <h3 className="mt-1 font-data text-lg font-medium text-white">{detail.request.method}</h3>
                 <p className="mt-1 font-data text-xs text-slate-400">
                   {new Date(detail.timestamp).toLocaleString()} · {detail.success ? 'SUCCESS' : 'FAILED'}
                   {detail.latency !== null ? ` · ${detail.latency}ms` : ''} · {detail.endpoint}
@@ -154,7 +154,7 @@ export function HistoryList({ history, onSelect, onClear }: HistoryListProps) {
                   setDetail(null);
                   onSelect(detail);
                 }}
-                className="btn-primary inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold"
+                className="btn-primary inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium"
               >
                 Open in RPC Diagnostics
                 <ArrowRight className="h-4 w-4" />

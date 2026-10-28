@@ -1,19 +1,18 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Activity, ArrowRight, ArrowUpRight, Pause, Play, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Pause, Play, X } from 'lucide-react';
 import { sendJsonRpcRequest } from '../services/rpcClient';
 import { BackToTop } from '../components/BackToTop';
 import { IntroSplash } from '../components/common/IntroSplash';
 import { DEFAULT_PORTALDOT_V3_EVM_RPC } from '../types/endpoint';
 import { landingCopy, readStoredLang, storeLang, type Lang } from '../utils/landingLang';
 import { PillarCards } from '../components/landing/PillarCards';
+import OrbitHero from '../components/landing/OrbitHero';
 import { SiteFooter } from '../components/layout/SiteFooter';
 import { SiteHeader } from '../components/layout/SiteHeader';
 import {
-  ANCHOR_BLOCK,
   ANCHOR_TX,
-  ANCHORED_REPORT_EXPORTED_AT,
+  ANCHORED_REPORTS,
   ANCHORED_REPORT_HASH,
-  ANCHORED_REPORT_RECORDS,
   PORTALDOT_CHAIN_ID,
   REGISTRY_CONTRACT,
 } from '../utils/siteConstants';
@@ -237,13 +236,11 @@ function LiveReadout({ lang }: { lang: Lang }) {
 
 /* ----------------------------- section heading ---------------------------- */
 
-function SectionHeading({ title, right, accent = 'blue' }: { title: string; right?: string; accent?: 'blue' | 'sky' | 'emerald' }) {
-  const border = accent === 'emerald' ? 'border-emerald-500/30' : accent === 'sky' ? 'border-sky-500/30' : 'border-[#0181FB]/30';
-  const label = accent === 'emerald' ? 'text-emerald-400/80' : accent === 'sky' ? 'text-sky-300/80' : 'text-slate-600';
+function SectionHeading({ title, right }: { title: string; right?: string }) {
   return (
-    <div className={`mb-10 flex flex-wrap items-end justify-between gap-3 border-b ${border} pb-5`}>
-      <p className="font-display text-2xl font-semibold tracking-tight text-white">{title}</p>
-      {right && <p className={`font-data text-[11px] uppercase tracking-[0.18em] ${label}`}>{right}</p>}
+    <div className="mb-10 flex flex-wrap items-end justify-between gap-3 border-b border-line pb-5">
+      <p className="text-[clamp(1.75rem,3vw,2.5rem)] font-medium tracking-tight text-white">{title}</p>
+      {right && <p className="text-sm text-slate-500">{right}</p>}
     </div>
   );
 }
@@ -270,14 +267,14 @@ function CheckTranscript({ lang }: { lang: Lang }) {
   const step = steps[active];
 
   return (
-    <div className="overflow-hidden rounded-xl border border-line bg-panel">
+    <div className="overflow-hidden rounded-lg border border-line bg-panel">
       <div className="flex items-center justify-between border-b border-line bg-black/25 px-4 py-2.5">
-        <span className="font-data text-[11px] text-slate-400">{ct.transcriptHeader}</span>
+        <span className="font-data text-xs text-slate-400">{ct.transcriptHeader}</span>
         <button
           type="button"
           onClick={() => setPlaying((p) => !p)}
           aria-label={playing ? ct.transcriptPause : ct.transcriptPlay}
-          className="btn-ghost flex h-7 w-7 items-center justify-center rounded-full"
+          className="flex h-7 w-7 items-center justify-center rounded-lg border border-line text-slate-200 transition-colors hover:text-white"
         >
           {playing ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
         </button>
@@ -297,9 +294,8 @@ function CheckTranscript({ lang }: { lang: Lang }) {
                 }`}
               >
                 {i === active && (
-                  <span className="absolute left-0 top-0 h-full w-[3px] bg-[#0181FB]" />
+                  <span className="absolute left-0 top-0 h-full w-[3px] bg-[#7DB4FF]" />
                 )}
-                <span className="font-data text-xs text-slate-600">{String(i + 1).padStart(2, '0')}</span>
                 <span className={`font-data text-sm ${i === active ? 'text-white' : 'text-slate-400'}`}>{s.method}</span>
                 <span className={`ml-auto font-data text-xs ${i < active || !playing ? 'text-emerald-400' : 'text-slate-600'}`}>
                   {i === active && playing ? ct.transcriptRunning : ct.transcriptPass}
@@ -308,7 +304,7 @@ function CheckTranscript({ lang }: { lang: Lang }) {
                   <span
                     key={active}
                     aria-hidden="true"
-                    className="step-progress absolute bottom-0 left-0 h-[2px] w-full bg-[#0181FB]"
+                    className="step-progress absolute bottom-0 left-0 h-[2px] w-full bg-[#7DB4FF]"
                   />
                 )}
               </button>
@@ -317,7 +313,7 @@ function CheckTranscript({ lang }: { lang: Lang }) {
         </ol>
         <div className="px-5 py-5" key={active}>
           <div className="state-swap">
-            <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">{ct.transcriptObserved}</p>
+            <p className="text-xs text-slate-500">{ct.transcriptObserved}</p>
             <p className="mt-2 font-data text-lg leading-snug text-white">{step.observed}</p>
             <p className="mt-4 font-data text-[11.5px] text-slate-400">
               {ct.transcriptLatency} <span className="text-slate-100">{step.latency} MS</span> · {ct.transcriptOutcome}{' '}
@@ -344,21 +340,20 @@ function CheckTranscript({ lang }: { lang: Lang }) {
  */
 function FlowVisual({ lang }: { lang: Lang }) {
   const fv = landingCopy[lang];
-  const { ref, inView } = useInView<HTMLDivElement>(0.3);
   return (
-    <div ref={ref} className={`mt-12 overflow-hidden rounded-xl border border-line bg-panel ${inView ? 'flow-in' : ''}`}>
+    <div className="mt-12 overflow-hidden rounded-lg border border-line bg-panel">
       <div className="flex items-center justify-between border-b border-line bg-black/25 px-4 py-2.5">
-        <span className="font-data text-[11px] text-slate-400">{fv.flowHeader}</span>
-        <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">{fv.flowRight}</span>
+        <span className="font-data text-xs text-slate-400">{fv.flowHeader}</span>
+        <span className="text-xs text-slate-500">{fv.flowRight}</span>
       </div>
       <div className="grid divide-y divide-line md:grid-cols-2 md:divide-x md:divide-y-0">
         {/* Console lane: one call, one answer, nothing kept. */}
         <div className="px-5 py-5">
-          <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">{fv.flowConsoleLane}</p>
+          <p className="text-xs text-slate-500">{fv.flowConsoleLane}</p>
           <svg viewBox="0 0 320 44" className="mt-4 w-full" aria-hidden="true">
-            <path pathLength={100} className="flow-draw" d="M8 22 H104" fill="none" stroke="#64748b" strokeWidth="1.6" />
+            <path pathLength={100} d="M8 22 H104" fill="none" stroke="#64748b" strokeWidth="1.6" />
             <line x1="128" y1="22" x2="312" y2="22" stroke="#475569" strokeWidth="1.2" strokeDasharray="3 6" opacity="0.5" />
-            <circle className="flow-node" style={{ transitionDelay: '500ms' }} cx="116" cy="22" r="5" fill="#0a1226" stroke="#94a3b8" strokeWidth="1.6" />
+            <circle cx="116" cy="22" r="5" fill="#0a1226" stroke="#94a3b8" strokeWidth="1.6" />
           </svg>
           <p className="mt-3 font-data text-[12.5px] leading-relaxed text-slate-400">
             eth_blockNumber → <span className="text-slate-200">143,764</span>
@@ -367,13 +362,13 @@ function FlowVisual({ lang }: { lang: Lang }) {
         </div>
         {/* NodeScope lane: same call, kept twice, diffed, exported. */}
         <div className="px-5 py-5">
-          <p className="font-data text-[10px] uppercase tracking-[0.22em] text-slate-300">{fv.flowNodescopeLane}</p>
+          <p className="text-xs text-slate-300">{fv.flowNodescopeLane}</p>
           <svg viewBox="0 0 320 44" className="mt-4 w-full" aria-hidden="true">
-            <path pathLength={100} className="flow-draw" d="M8 22 H312" fill="none" stroke="#0181FB" strokeWidth="1.6" />
-            <circle className="flow-node" style={{ transitionDelay: '150ms' }} cx="8" cy="22" r="5" fill="#0a1226" stroke="#0181FB" strokeWidth="1.8" />
-            <circle className="flow-node" style={{ transitionDelay: '600ms' }} cx="140" cy="22" r="5" fill="#0a1226" stroke="#0181FB" strokeWidth="1.8" />
-            <circle className="flow-node" style={{ transitionDelay: '1000ms' }} cx="238" cy="22" r="5" fill="#0a1226" stroke="#34d399" strokeWidth="1.8" />
-            <circle className="flow-node" style={{ transitionDelay: '1350ms' }} cx="312" cy="22" r="5" fill="#0a1226" stroke="#e2e8f0" strokeWidth="1.8" />
+            <path pathLength={100} d="M8 22 H312" fill="none" stroke="#7DB4FF" strokeWidth="1.6" />
+            <circle cx="8" cy="22" r="5" fill="#0a1226" stroke="#7DB4FF" strokeWidth="1.8" />
+            <circle cx="140" cy="22" r="5" fill="#0a1226" stroke="#7DB4FF" strokeWidth="1.8" />
+            <circle cx="238" cy="22" r="5" fill="#0a1226" stroke="#34d399" strokeWidth="1.8" />
+            <circle cx="312" cy="22" r="5" fill="#0a1226" stroke="#e2e8f0" strokeWidth="1.8" />
           </svg>
           <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 font-data text-[11px] text-slate-500">
             <span>A · <span className="text-slate-200">143,764</span></span>
@@ -392,30 +387,6 @@ function FlowVisual({ lang }: { lang: Lang }) {
 
 /* ------------------------------ evidence grid ----------------------------- */
 
-function EvidenceGrid({ lang }: { lang: Lang }) {
-  const { ref, inView } = useInView<HTMLDivElement>(0.35);
-  return (
-    <div
-      ref={ref}
-      className={`grid grid-cols-12 gap-1.5 ${inView ? 'cells-in' : ''}`}
-      role="img"
-      aria-label={landingCopy[lang].evidenceGridAria}
-    >
-      {Array.from({ length: 48 }).map((_, i) => (
-        <span
-          key={i}
-          className="evidence-cell h-6 rounded-[3px]"
-          style={{
-            transitionDelay: `${i * 18}ms`,
-            backgroundColor:
-              i === 47 ? 'rgba(52, 211, 153, 0.85)' : `rgba(1, 129, 251, ${0.1 + (i / 47) * 0.5})`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 /* ------------------------------ HUD hero arc ------------------------------ */
 
 /**
@@ -424,23 +395,6 @@ function EvidenceGrid({ lang }: { lang: Lang }) {
  * a live block height. The live number stays in the Live Readout card, which
  * is fetched once when the page loads.
  */
-function HudArc() {
-  return (
-    <svg
-      viewBox="0 0 1200 240"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-      className="hud-arc pointer-events-none absolute inset-x-0 top-0 h-56 w-full opacity-60"
-    >
-      <path d="M -40 240 Q 600 -40 1240 240" fill="none" stroke="#0181FB" strokeOpacity="0.35" strokeWidth="1" />
-      <circle r="3.5" fill="#0181FB">
-        <animateMotion dur="14s" repeatCount="indefinite" path="M -40 240 Q 600 -40 1240 240" />
-      </circle>
-    </svg>
-  );
-}
-
-
 /* --------------------------- scroll progress ------------------------------ */
 
 function ScrollProgress() {
@@ -456,7 +410,7 @@ function ScrollProgress() {
   }, []);
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-[100] h-[2px] bg-black/40">
-      <div className="h-full bg-[#0181FB]" style={{ width: `${progress}%` }} />
+      <div className="h-full bg-[#7DB4FF]" style={{ width: `${progress}%` }} />
     </div>
   );
 }
@@ -632,94 +586,6 @@ function TypewriterJson({ replayLabel }: { replayLabel: string }) {
  * line, labelled with real method names. Pure decoration: it carries no live
  * data, no block height, and no result, and the caption says so.
  */
-function PacketFlow({ lang }: { lang: Lang }) {
-  const pk = landingCopy[lang];
-  return (
-    <div aria-hidden="true" className="mb-6 overflow-hidden rounded-[20px] border border-line bg-panel/70 px-6 py-5">
-      <svg viewBox="0 0 600 60" preserveAspectRatio="none" className="h-[60px] w-full">
-        <path d="M 20 30 H 580" fill="none" stroke="#1e293b" strokeWidth="1" />
-        <circle r="3" fill="#0181FB">
-          <animateMotion dur="6s" repeatCount="indefinite" path="M 20 30 H 580" />
-        </circle>
-        <circle r="3" fill="#38bdf8">
-          <animateMotion dur="8s" begin="1s" repeatCount="indefinite" path="M 20 30 H 580" />
-        </circle>
-        <circle r="3" fill="#34d399">
-          <animateMotion dur="10s" begin="2s" repeatCount="indefinite" path="M 20 30 H 580" />
-        </circle>
-      </svg>
-      <div className="flex justify-between font-data text-[10px] uppercase tracking-[0.2em] text-slate-500">
-        <span>{pk.packetYou}</span>
-        <span className="text-slate-400">eth_chainId · eth_blockNumber · net_version</span>
-        <span>{pk.packetReceipt}</span>
-      </div>
-      <p className="mt-2 text-center font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">
-        {pk.packetNote}
-      </p>
-    </div>
-  );
-}
-
-
-/* --------------------------- full background ------------------------------- */
-
-/**
- * Full-page background animation, built from cheap parts:
- * radial-gradient glow orbs (no filter blur, so moving them is just
- * compositing), two SVG ribbon paths drifting on transform, and one light
- * streak sweeping across. A rAF-throttled scroll listener only shifts the
- * ribbon layer for parallax, it never polls and never fetches anything.
- * It is decoration only, carries no data, and sits behind all content.
- */
-function FullBackground() {
-  const [scroll, setScroll] = useState(0);
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        setScroll(window.scrollY);
-        ticking = false;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-  return (
-    <div aria-hidden="true" className="ribbon-bg pointer-events-none fixed inset-0 z-0 overflow-hidden">
-      <div
-        className="ribbon-orb absolute -left-40 top-[10%] h-[560px] w-[560px] rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(1, 129, 251, 0.16), transparent 70%)' }}
-      />
-      <div
-        className="ribbon-orb ribbon-orb-2 absolute -right-48 top-[45%] h-[640px] w-[640px] rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(56, 189, 248, 0.12), transparent 70%)' }}
-      />
-      <div
-        className="ribbon-orb ribbon-orb-3 absolute left-[30%] top-[80%] h-[520px] w-[520px] rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(30, 50, 90, 0.35), transparent 70%)' }}
-      />
-      <div className="absolute inset-x-0 top-[18%]" style={{ transform: `translateY(${scroll * 0.08}px)` }}>
-        <svg viewBox="0 0 1440 320" preserveAspectRatio="none" className="ribbon-path h-[320px] w-[110%] -translate-x-[5%]">
-          <defs>
-            <linearGradient id="ribbonGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#0181FB" stopOpacity="0" />
-              <stop offset="50%" stopColor="#0181FB" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <path d="M -100 160 Q 240 40 480 160 T 960 160 T 1540 160" fill="none" stroke="url(#ribbonGrad)" strokeWidth="1.5" />
-          <path d="M -100 210 Q 240 90 480 210 T 960 210 T 1540 210" fill="none" stroke="url(#ribbonGrad)" strokeWidth="1" strokeOpacity="0.5" />
-        </svg>
-      </div>
-      <div className="ribbon-streak absolute left-0 top-[62%] h-[2px] w-1/3 bg-gradient-to-r from-transparent via-[#0181FB]/70 to-transparent" />
-    </div>
-  );
-}
-
-/* ---------------------------------- page ---------------------------------- */
-
 export function Landing() {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [lang, setLangState] = useState<Lang>(() => readStoredLang());
@@ -728,6 +594,8 @@ export function Landing() {
     storeLang(l);
   };
   const t = landingCopy[lang];
+  const [showcaseTab, setShowcaseTab] = useState<'health' | 'fees'>('health');
+  const [hash, setHash] = useState('');
 
   useEffect(() => {
     if (lightbox === null) return;
@@ -747,13 +615,11 @@ export function Landing() {
           disappear behind later sections while scrolling. At z-[100] it
           stays above the nav (z-40), modals (z-50), and every section. */}
       <ScrollProgress />
-      <FullBackground />
       {/* -------------------------------- nav ------------------------------- */}
       <SiteHeader
         nav={t.nav}
         lang={lang}
         setLang={setLang}
-        accent="blue"
         menuId="landing-mobile-menu"
         variant="landing"
         launchLabel={t.launchApp}
@@ -765,65 +631,81 @@ export function Landing() {
       <main>
       {/* -------------------------------- hero ------------------------------ */}
       <section className="relative overflow-hidden px-4 pb-24 pt-32 md:pt-40">
-        <HudArc />
-        <div aria-hidden="true" className="pointer-events-none absolute -top-32 right-[-10%] h-[480px] w-[480px] rounded-full bg-[#0181FB]/[0.14] blur-[120px]" />
-        <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-[-10%] h-[360px] w-[360px] rounded-full bg-[#0181FB]/[0.08] blur-[100px]" />
-        <div className="relative mx-auto grid max-w-6xl items-start gap-12 lg:grid-cols-12">
-          <div className="stagger lg:col-span-7">
-            <p className="inline-flex items-center gap-2 rounded-full border border-line bg-black/30 px-3 py-1.5 font-data text-[10px] uppercase tracking-[0.22em] text-slate-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#0181FB]" />
-              {t.heroPill}
-            </p>
-            <h1 className="mt-7 font-display text-[52px] font-semibold leading-[0.98] tracking-tight text-white md:text-[88px]">
-              {t.heroLine1}
-              <br />
-              NodeScope{' '}
-              <span className="font-data font-medium tracking-tight text-[#0181FB]" style={{ textShadow: '0 0 32px rgba(1, 129, 251, 0.45)' }}>
-                {t.heroAccent}<span className="cursor-blink">▊</span>
-              </span>
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <h1 className="text-[clamp(2.75rem,6vw,5rem)] font-medium leading-[1.02] tracking-tight text-white">
+              {t.heroTitle}
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-400 md:text-lg">
-              {t.heroParagraph}
-              <span className="text-slate-100">{t.heroParagraphEmphasis}</span>{t.heroParagraphTail}
+              {t.heroSentence}
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3.5">
-              <a href={APP_URL} className="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-[15px] font-semibold">
+              <a href={APP_URL} className="inline-flex items-center gap-2 rounded-lg bg-[#7DB4FF] px-6 py-3.5 text-[15px] font-medium text-[#060b1d] transition hover:brightness-110">
                 {t.launchApp}
                 <ArrowRight className="h-4.5 w-4.5" />
               </a>
-              <a href={DEMO_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-2 py-3.5 text-[15px] font-medium text-slate-300 underline decoration-slate-600 underline-offset-4 transition-colors hover:text-white">
+              <a href={DEMO_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 px-2 py-3.5 text-[15px] font-medium text-slate-300 transition-colors hover:text-white">
                 {t.watchDemo}
                 <ArrowUpRight className="h-4.5 w-4.5" />
               </a>
             </div>
-            <p className="mt-6 font-data text-[11px] uppercase tracking-[0.16em] text-slate-600">
-              {t.heroFactLine}
-            </p>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-400">
-              {t.heroPillarLine}
-            </p>
-            <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 border-t border-line pt-4 font-data text-[10px] uppercase tracking-[0.22em] text-slate-500">
-              {t.heroMeta.map((m) => (
-                <span key={m}>{m}</span>
-              ))}
+            <div className="mt-10 flex flex-wrap gap-3">
+              <a href="/judges" className="rounded-lg border border-line px-3 py-2 font-data text-xs text-slate-300 transition-colors hover:text-white">
+                Registry {REGISTRY_CONTRACT.slice(0, 6)}…{REGISTRY_CONTRACT.slice(-4)}
+              </a>
+              <a href={`/verify?hash=${ANCHORED_REPORTS[2].hash}&contract=${REGISTRY_CONTRACT}&tx=${ANCHORED_REPORTS[2].tx}`} className="rounded-lg border border-line px-3 py-2 font-data text-xs text-slate-300 transition-colors hover:text-white">
+                {ANCHORED_REPORTS[2].hash.slice(0, 10)}…{ANCHORED_REPORTS[2].hash.slice(-6)}
+              </a>
+              <a href="/app/fee-lab" className="rounded-lg border border-line px-3 py-2 font-data text-xs text-slate-300 transition-colors hover:text-white">
+                124.098 / 122.191 tPOT
+              </a>
             </div>
           </div>
+          <div className="lg:col-span-7 lg:-mr-16">
+            <OrbitHero />
+          </div>
+        </div>
+      </section>
 
-          <div className="stagger relative lg:col-span-5">
-            <span aria-hidden="true" className="absolute -left-2 -top-2 font-data text-sm text-[#0181FB]">+</span>
-            <span aria-hidden="true" className="absolute -right-2 -top-2 font-data text-sm text-[#0181FB]">+</span>
-            <LiveReadout lang={lang} />
-            <div className="relative z-10 mx-3 -mt-3">
-              <figure className="hero-media relative overflow-hidden rounded-[24px] border border-line bg-panel shadow-[0_32px_90px_rgba(0,0,0,0.55),0_0_60px_rgba(1,129,251,0.12)] transition-transform duration-500 [transform:perspective(1200px)_rotateY(-6deg)_rotateX(1.5deg)] hover:[transform:perspective(1200px)_rotateY(0deg)_rotateX(0deg)]" style={{ transitionTimingFunction: 'var(--ease-out)' }}>
-                <img src="/screenshots/03-snapshot-comparison.jpg" alt={t.heroFigureCaption} fetchPriority="high" className="aspect-[16/9] w-full object-cover object-top" />
-                <div aria-hidden="true" className="scan-line pointer-events-none absolute inset-x-0 top-0 z-20 h-20" />
-                <figcaption className="border-t border-line bg-black/30 px-4 py-2.5 font-data text-[10px] uppercase tracking-[0.16em] text-slate-400">
-                  {t.heroFigureCaption}
-                </figcaption>
-              </figure>
-              <span aria-hidden="true" className="absolute -left-4 top-6 rounded-full border border-line bg-black/80 px-3 py-1.5 font-data text-[10px] uppercase tracking-[0.18em] text-slate-200 shadow-lg">{t.heroChipEvm}</span>
-              <span aria-hidden="true" className="absolute -right-3 bottom-12 rounded-full border border-line bg-black/80 px-3 py-1.5 font-data text-[10px] uppercase tracking-[0.18em] text-slate-200 shadow-lg">{t.heroChipSchema}</span>
-            </div>
+      {/* ---------------------------- showcase ------------------------------ */}
+      <section className="border-b border-line px-4 py-16">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-medium tracking-tight text-white">
+            {t.showcaseTitle}
+          </h2>
+          <div className="mt-8 flex gap-6 border-b border-line" role="tablist" aria-label="Product showcase">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={showcaseTab === 'health'}
+              onClick={() => setShowcaseTab('health')}
+              className={showcaseTab === 'health' ? 'border-b-2 border-[#7DB4FF] pb-2 text-white' : 'pb-2 text-slate-400 transition-colors hover:text-white'}
+            >
+              Health
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={showcaseTab === 'fees'}
+              onClick={() => setShowcaseTab('fees')}
+              className={showcaseTab === 'fees' ? 'border-b-2 border-[#7DB4FF] pb-2 text-white' : 'pb-2 text-slate-400 transition-colors hover:text-white'}
+            >
+              Fees
+            </button>
+          </div>
+          <div className="mt-8" role="tabpanel">
+            {showcaseTab === 'health' ? (
+              <LiveReadout lang={lang} />
+            ) : (
+              <div className="max-w-2xl">
+                <p className="text-base leading-relaxed text-slate-400">{t.feeBlockBody}</p>
+                <p className="mt-4 font-data text-sm text-slate-200">{t.feeBlockEvm}</p>
+                <p className="mt-1 font-data text-sm text-slate-200">{t.feeBlockNative}</p>
+                <a href="/app/fee-lab" className="mt-6 inline-block text-[15px] font-medium text-[#7DB4FF] transition-colors hover:text-white">
+                  {t.feeBlockCta}
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -831,33 +713,18 @@ export function Landing() {
       {/* ------------------------------ pillars ------------------------------- */}
       <section className="cv-auto border-b border-line px-4 py-16">
         <div className="mx-auto max-w-6xl">
-          <h2 className="font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">{t.pillarSectionTitle}</h2>
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-medium tracking-tight text-white">{t.pillarSectionTitle}</h2>
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-400 md:text-base">{t.pillarSectionIntro}</p>
           <div className="mt-8">
             <PillarCards health={t.pillarHealth} fees={t.pillarFees} />
-          </div>
-          <div className="mt-8 rounded-3xl border border-amber-400/30 bg-amber-400/[0.05] p-6 md:p-7">
-            <h3 className="font-display text-xl font-semibold tracking-tight text-white">{t.feeBlockTitle}</h3>
-            <p className="mt-2.5 max-w-3xl text-sm leading-relaxed text-slate-300">{t.feeBlockBody}</p>
-            <div className="mt-5 flex flex-wrap gap-x-8 gap-y-2 font-data text-sm tabular-nums">
-              <span className="text-[#7DB4FF]">{t.feeBlockEvm}</span>
-              <span className="text-amber-300">{t.feeBlockNative}</span>
-            </div>
-            <p className="mt-4 text-xs text-slate-400">{t.feeBlockFootnote}</p>
-            <a href="/app/fee-lab" className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-slate-200 underline decoration-slate-600 underline-offset-4 transition-colors hover:text-white">
-              {t.feeBlockCta} →
-            </a>
           </div>
         </div>
       </section>
 
       {/* --------------------------- announcement banner ----------------------- */}
       <div className="border-y border-line bg-black/30 px-4 py-3">
-        <p className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center font-data text-[11px] uppercase tracking-[0.18em] text-slate-400">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-          </span>
+        <p className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center font-data text-xs text-slate-400">
+          <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full bg-emerald-400" />
           {t.banner}
         </p>
       </div>
@@ -867,8 +734,8 @@ export function Landing() {
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
           {t.stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 80}>
-              <p className="font-data text-3xl font-semibold text-white md:text-4xl">{s.value}</p>
-              <p className="mt-2 font-data text-[11px] uppercase tracking-[0.2em] text-slate-300">{s.label}</p>
+              <p className="font-data text-3xl font-medium text-white md:text-4xl">{s.value}</p>
+              <p className="mt-2 font-data text-[11px] text-slate-300">{s.label}</p>
               <p className="mt-1.5 max-w-[26ch] text-xs leading-relaxed text-slate-500">{s.sub}</p>
             </Reveal>
           ))}
@@ -896,13 +763,12 @@ export function Landing() {
                 </div>
               </div>
             </div>
-            <div className="mt-10 rounded-xl border border-line bg-panel p-6">
-              <h3 className="font-display text-lg font-semibold text-white">{t.whyTitle}</h3>
-              <ul className="mt-3 space-y-2.5">
+            <div className="mt-10">
+              <h3 className="text-lg font-medium text-white">{t.whyTitle}</h3>
+              <ul className="mt-3 divide-y divide-line border-y border-line">
                 {t.whyItems.map((item) => (
-                  <li key={item} className="flex gap-3 text-[15px] leading-[1.85] text-slate-400">
-                    <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0181FB]" />
-                    <span>{item}</span>
+                  <li key={item} className="py-3 text-[15px] leading-[1.85] text-slate-400">
+                    {item}
                   </li>
                 ))}
               </ul>
@@ -917,38 +783,39 @@ export function Landing() {
         <div className="mx-auto max-w-6xl">
           <Reveal>
             <SectionHeading title={t.howTitle} right={t.howRight} />
-            <PacketFlow lang={lang} />
-            <div className="overflow-hidden rounded-xl border border-line">
+            <div className="overflow-hidden rounded-lg border border-line">
               {t.howSteps.map((s) => (
-                <div key={s.title} className="grid gap-2 border-b border-line bg-panel px-6 py-6 last:border-b-0 md:grid-cols-12">
-                  <h3 className="font-display text-lg font-semibold text-white md:col-span-4">{s.title}</h3>
+                <div key={s.title} className="grid gap-2 border-b border-line px-6 py-6 last:border-b-0 md:grid-cols-12">
+                  <h3 className="text-lg font-medium text-white md:col-span-4">{s.title}</h3>
                   <p className="text-sm leading-relaxed text-slate-400 md:col-span-8">{s.body}</p>
                 </div>
               ))}
-            </div>
-            <div className="mt-6 rounded-xl border border-line bg-panel p-6">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="font-display text-lg font-semibold text-white">{t.archTitle}</h3>
-                <span className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-500">{t.archRight}</span>
+              <div className="px-6 py-5">
+                <p className="text-sm leading-relaxed text-slate-400">{t.howAnchorLine}</p>
+                <a href={`/verify?hash=${ANCHORED_REPORTS[2].hash}&contract=${REGISTRY_CONTRACT}&tx=${ANCHORED_REPORTS[2].tx}`} className="mt-2 inline-block font-data text-sm text-[#7DB4FF] transition-colors hover:text-white">
+                  {ANCHORED_REPORTS[2].hash.slice(0, 10)}…{ANCHORED_REPORTS[2].hash.slice(-6)} →
+                </a>
               </div>
-              <ol className="mt-4">
-                {t.archNodes.map((node, i) => (
-                  <li key={node} className="flex gap-3">
-                    <span className="flex flex-col items-center">
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#0181FB]/50 bg-[#0181FB]/10 font-data text-[11px] text-[#7DB4FF]">{i + 1}</span>
-                      {i < t.archNodes.length - 1 && <span aria-hidden="true" className="w-px flex-1 bg-line" />}
-                    </span>
-                    <span className="pb-4 text-sm leading-relaxed text-slate-300">{node}</span>
+            </div>
+            <div className="mt-8">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="text-lg font-medium text-white">{t.archTitle}</h3>
+                <span className="text-sm text-slate-500">{t.archRight}</span>
+              </div>
+              <ul className="mt-4 divide-y divide-line border-y border-line">
+                {t.archNodes.map((node) => (
+                  <li key={node} className="py-3 text-sm leading-relaxed text-slate-300">
+                    {node}
                   </li>
                 ))}
-              </ol>
+              </ul>
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <div className="mt-6 overflow-hidden rounded-xl border border-line bg-panel">
+            <div className="mt-6 overflow-hidden rounded-lg border border-line bg-panel">
               <div className="flex items-center justify-between border-b border-line bg-black/25 px-4 py-2.5">
-                <span className="font-data text-[11px] text-slate-400">{t.reportSampleLabel}</span>
-                <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">{t.reportSampleRight}</span>
+                <span className="font-data text-xs text-slate-400">{t.reportSampleLabel}</span>
+                <span className="text-xs text-slate-500">{t.reportSampleRight}</span>
               </div>
               <TypewriterJson replayLabel={t.typeReplay} />
             </div>
@@ -964,28 +831,27 @@ export function Landing() {
             <p className="max-w-3xl text-[15px] leading-[1.85] text-slate-400">
               {t.tutorialIntro}
             </p>
-            <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-6 divide-y divide-line border-y border-line">
               {t.tutorialSteps.map((s) => (
-                <div key={s.n} className="rounded-[20px] border border-line bg-panel/70 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:border-slate-500/40">
-                  <p className="font-data text-[11px] uppercase tracking-[0.2em] text-[#0181FB]">{s.n}</p>
-                  <h3 className="mt-3 font-display text-lg font-semibold text-white">{s.title}</h3>
-                  <p className="mt-2 text-[15px] leading-[1.85] text-slate-400">{s.body}</p>
-                </div>
+                <li key={s.n} className="grid gap-2 py-6 md:grid-cols-12">
+                  <h3 className="text-lg font-medium text-white md:col-span-4">{s.title}</h3>
+                  <p className="text-[15px] leading-[1.85] text-slate-400 md:col-span-8">{s.body}</p>
+                </li>
               ))}
-              <div className="flex flex-col justify-center rounded-[20px] border border-[#0181FB]/40 bg-[#0181FB]/10 p-6">
-                <p className="font-display text-lg font-semibold text-white">{t.tutorialCtaTitle}</p>
-                <p className="mt-2 text-[15px] leading-[1.85] text-slate-300">
-                  {t.tutorialCtaBody}
-                </p>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <a href={APP_URL} className="btn-primary inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold">
-                    {t.tutorialCtaPrimary}
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
-                  <a href="/verify" className="btn-ghost inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-medium">
-                    {t.tutorialCtaSecondary}
-                  </a>
-                </div>
+            </ul>
+            <div className="mt-8">
+              <p className="text-lg font-medium text-white">{t.tutorialCtaTitle}</p>
+              <p className="mt-2 text-[15px] leading-[1.85] text-slate-400">
+                {t.tutorialCtaBody}
+              </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <a href={APP_URL} className="inline-flex items-center gap-2 rounded-lg bg-[#7DB4FF] px-5 py-3 text-sm font-medium text-[#060b1d] transition hover:brightness-110">
+                  {t.tutorialCtaPrimary}
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <a href="/verify" className="inline-flex items-center gap-2 rounded-lg border border-line px-5 py-3 text-sm font-medium text-slate-200 transition-colors hover:text-white">
+                  {t.tutorialCtaSecondary}
+                </a>
               </div>
             </div>
           </Reveal>
@@ -1000,10 +866,10 @@ export function Landing() {
             <div className="grid items-start gap-6 lg:grid-cols-2">
               <CheckTranscript lang={lang} />
               {/* snapshot diff artifact */}
-              <div className="overflow-hidden rounded-xl border border-line bg-panel">
+              <div className="overflow-hidden rounded-lg border border-line bg-panel">
                 <div className="flex items-center justify-between border-b border-line bg-black/25 px-4 py-2.5">
-                  <span className="font-data text-[11px] text-slate-400">{t.diffHeader}</span>
-                  <span className="font-data text-[10px] uppercase tracking-[0.18em] text-slate-600">{t.diffRight}</span>
+                  <span className="font-data text-xs text-slate-400">{t.diffHeader}</span>
+                  <span className="text-xs text-slate-500">{t.diffRight}</span>
                 </div>
                 <div className="px-5 py-5 font-data text-[12.5px] leading-[1.9]">
                   <p><span className="mr-4 text-slate-600">01</span><span className="text-slate-500"># nodescope.health-snapshot.v1 — diff A → B</span></p>
@@ -1015,72 +881,43 @@ export function Landing() {
                   <p><span className="mr-4 text-slate-600">07</span><span className="text-slate-500">net_version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;420420777 → 420420777&nbsp;&nbsp;{t.diffUnchanged}</span></p>
                   <p><span className="mr-4 text-slate-600">08</span><span className="text-slate-500">findings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t.diffFindings}</span></p>
                 </div>
-                <p className="border-t border-line px-5 py-3 font-data text-[10.5px] uppercase tracking-[0.14em] text-slate-600">
+                <p className="border-t border-line px-5 py-3 text-xs text-slate-500">
                   {t.diffFooter}
                 </p>
               </div>
             </div>
           </Reveal>
           <Reveal delay={100}>
-            <div className="mt-6 hidden overflow-hidden rounded-[20px] border border-sky-500/25 shadow-[0_24px_60px_rgba(0,0,0,0.4)] md:block">
+            <div className="mt-6 hidden md:block">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="border-b border-sky-500/25 bg-sky-500/[0.06] font-data text-[11px] uppercase tracking-[0.18em] text-sky-300">
+                  <tr className="border-b border-line text-sm text-slate-500">
                     <th className="px-5 py-3.5 font-medium">{t.capabilityHeaders[0]}</th>
                     <th className="hidden px-5 py-3.5 font-medium md:table-cell">{t.capabilityHeaders[1]}</th>
                     <th className="px-5 py-3.5 font-medium">{t.capabilityHeaders[2]}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-line bg-panel/60 text-sm">
-                  {t.capabilities.map((r, i) => (
-                    <tr key={r.cap} className="group transition-colors hover:bg-white/[0.03]">
-                      <td className="relative px-5 py-4 font-data text-[13px] font-medium text-white">
-                        <span aria-hidden="true" className="absolute left-0 top-0 h-full w-[3px] bg-[#0181FB] opacity-0 transition-opacity group-hover:opacity-100" />
-                        <span className="mr-3 text-slate-600">0{i + 1}</span>
+                <tbody className="divide-y divide-line text-sm">
+                  {t.capabilities.map((r) => (
+                    <tr key={r.cap}>
+                      <td className="px-5 py-4 font-data text-[13px] font-medium text-white">
                         {r.cap}
                       </td>
                       <td className="hidden max-w-md px-5 py-4 leading-relaxed text-slate-400 md:table-cell">{r.what}</td>
-                      <td className="px-5 py-4">
-                        <span
-                          className={`inline-block rounded-full border px-2.5 py-1 font-data text-[11px] ${
-                            r.tone === 'emerald'
-                              ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
-                              : r.tone === 'amber'
-                                ? 'border-amber-500/40 bg-amber-500/10 text-amber-300'
-                                : r.tone === 'sky'
-                                  ? 'border-sky-500/40 bg-sky-500/10 text-sky-300'
-                                  : 'border-line bg-white/[0.03] text-slate-300'
-                          }`}
-                        >
-                          {r.proof}
-                        </span>
-                      </td>
+                      <td className="px-5 py-4 text-sm text-slate-400">{r.proof}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <div className="mt-6 space-y-3 md:hidden">
-              {t.capabilities.map((r, i) => (
-                <div key={r.cap} className="rounded-xl border border-line bg-panel p-4">
+            <div className="mt-6 divide-y divide-line border-y border-line md:hidden">
+              {t.capabilities.map((r) => (
+                <div key={r.cap} className="py-4">
                   <p className="font-data text-[13px] font-medium text-white">
-                    <span className="mr-3 text-slate-600">0{i + 1}</span>
                     {r.cap}
                   </p>
                   <p className="mt-1.5 text-sm leading-relaxed text-slate-400">{r.what}</p>
-                  <span
-                    className={`mt-2 inline-block rounded-full border px-2.5 py-1 font-data text-[11px] ${
-                      r.tone === 'emerald'
-                        ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
-                        : r.tone === 'amber'
-                          ? 'border-amber-500/40 bg-amber-500/10 text-amber-300'
-                          : r.tone === 'sky'
-                            ? 'border-sky-500/40 bg-sky-500/10 text-sky-300'
-                            : 'border-line bg-white/[0.03] text-slate-300'
-                    }`}
-                  >
-                    {r.proof}
-                  </span>
+                  <p className="mt-2 text-sm text-slate-400">{r.proof}</p>
                 </div>
               ))}
             </div>
@@ -1092,33 +929,27 @@ export function Landing() {
       <section id="evidence" className="cv-auto scroll-mt-28 px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <SectionHeading title={t.evidenceTitle} right={t.evidenceRight} accent="emerald" />
-            <div className="rounded-xl border border-line bg-panel px-5 py-5">
-              <EvidenceGrid lang={lang} />
-              <p className="mt-3.5 font-data text-[11px] leading-relaxed text-slate-500">
-                {t.evidenceGridCaption}
-              </p>
-            </div>
-            <div className="mt-6 hidden overflow-hidden rounded-[20px] border border-emerald-500/25 shadow-[0_24px_60px_rgba(0,0,0,0.4)] md:block">
+            <SectionHeading title={t.evidenceTitle} right={t.evidenceRight} />
+            <p className="max-w-3xl text-sm leading-relaxed text-slate-400">{t.evidenceRangeLine}</p>
+            <div className="mt-6 hidden md:block">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-emerald-500/25 bg-emerald-500/[0.06] font-data text-[11px] uppercase tracking-[0.18em] text-emerald-300">
+                  <tr className="border-b border-line text-sm text-slate-500">
                     <th className="px-5 py-3.5 font-medium">{t.evidenceHeaders[0]}</th>
                     <th className="px-5 py-3.5 font-medium">{t.evidenceHeaders[1]}</th>
                     <th className="hidden px-5 py-3.5 font-medium md:table-cell">{t.evidenceHeaders[2]}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-line bg-panel/60 font-data text-[13px]">
+                <tbody className="divide-y divide-line font-data text-[13px]">
                   {t.evidenceRows.map((r) => (
-                    <tr key={r.block} className="group transition-colors hover:bg-white/[0.03]">
-                      <td className="relative px-5 py-3.5 font-semibold text-white">
-                        <span aria-hidden="true" className="absolute left-0 top-0 h-full w-[3px] bg-emerald-400 opacity-0 transition-opacity group-hover:opacity-100" />
+                    <tr key={r.block}>
+                      <td className="px-5 py-3.5 font-semibold text-white">
                         {r.block}
                       </td>
                       <td className="px-5 py-3.5 text-slate-300">
                         {r.label}
                         {'delta' in r && r.delta ? (
-                          <span className="ml-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[11px] text-emerald-300">
+                          <span className="ml-2 text-slate-400">
                             Δ {r.delta}
                           </span>
                         ) : null}
@@ -1129,14 +960,14 @@ export function Landing() {
                 </tbody>
               </table>
             </div>
-            <div className="mt-6 space-y-3 md:hidden">
+            <div className="mt-6 divide-y divide-line border-y border-line md:hidden">
               {t.evidenceRows.map((r) => (
-                <div key={r.block} className="rounded-xl border border-line bg-panel p-4 font-data text-[13px]">
+                <div key={r.block} className="py-4 font-data text-[13px]">
                   <p className="font-semibold text-white">{r.block}</p>
                   <p className="mt-1 text-slate-300">
                     {r.label}
                     {'delta' in r && r.delta ? (
-                      <span className="ml-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[11px] text-emerald-300">
+                      <span className="ml-2 text-slate-400">
                         Δ {r.delta}
                       </span>
                     ) : null}
@@ -1145,13 +976,13 @@ export function Landing() {
                 </div>
               ))}
             </div>
-            <p className="mt-3 font-data text-[11px] leading-relaxed text-slate-600">
+            <p className="mt-3 text-xs leading-relaxed text-slate-500">
               {t.evidenceFootnote}
             </p>
-            <figure className="mt-8 overflow-hidden rounded-[20px] border border-line bg-panel shadow-[0_24px_60px_rgba(0,0,0,0.4)]">
+            <figure className="mt-8 overflow-hidden rounded-lg border border-line">
               <MotionVideo caption={t.motionCaption} />
               <figcaption className="px-5 py-3.5">
-                <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-300">{t.motionCaption}</p>
+                <p className="text-sm text-slate-300">{t.motionCaption}</p>
                 <p className="mt-1.5 text-[13px] leading-relaxed text-slate-500">{t.motionNote}</p>
               </figcaption>
             </figure>
@@ -1163,22 +994,21 @@ export function Landing() {
                   key={s.src}
                   type="button"
                   onClick={() => setLightbox(i)}
-                  className={`group relative overflow-hidden rounded-[21px] bg-gradient-to-br from-[#0181FB]/60 via-slate-500/20 to-transparent p-px text-left shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(0,0,0,0.5)] ${i === 0 ? 'col-span-2 lg:col-span-1' : ''}`}
+                  className={`overflow-hidden rounded-lg border border-line text-left transition-colors hover:border-slate-500/40 ${i === 0 ? 'col-span-2 lg:col-span-1' : ''}`}
                 >
-                  <span className="block rounded-[20px] bg-panel">
+                  <span className="block">
                     <span className="flex items-center gap-1.5 border-b border-line bg-black/30 px-4 py-2.5">
                       <span className="h-2.5 w-2.5 rounded-full bg-slate-600" />
                       <span className="h-2.5 w-2.5 rounded-full bg-slate-500" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#0181FB]" />
-                      <span className="ml-2 font-data text-[10px] uppercase tracking-[0.16em] text-slate-600">{t.galleryLabel}</span>
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#7DB4FF]" />
+                      <span className="ml-2 text-xs text-slate-500">{t.galleryLabel}</span>
                     </span>
-                    <span className="relative block overflow-hidden">
-                      <img src={s.src} alt={s.caption} className="aspect-[16/10] w-full object-cover object-top opacity-90 transition-all duration-500 group-hover:scale-[1.04] group-hover:opacity-100" loading="lazy" />
-                      <span aria-hidden="true" className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                    <span className="block overflow-hidden">
+                      <img src={s.src} alt={s.caption} className="aspect-[16/10] w-full object-cover object-top" loading="lazy" />
                     </span>
-                    <span className="flex items-center justify-between px-4 py-3 font-data text-[11px] uppercase tracking-[0.14em] text-slate-400">
+                    <span className="flex items-center justify-between px-4 py-3 text-xs text-slate-400">
                       {s.caption}
-                      <span aria-hidden="true" className="opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100">↗</span>
+                      <span aria-hidden="true">↗</span>
                     </span>
                   </span>
                 </button>
@@ -1192,38 +1022,50 @@ export function Landing() {
       <section id="onchain" className="cv-auto scroll-mt-28 px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <SectionHeading title={t.onchainTitle} right={t.onchainRight} accent="emerald" />
+            <SectionHeading title={t.onchainTitle} right={t.onchainRight} />
             <p className="max-w-3xl text-[15px] leading-[1.85] text-slate-400">{t.onchainIntro}</p>
-            <div className="mt-6 grid gap-3 md:grid-cols-3">
-              <div className="rounded-xl border border-line bg-panel p-4">
-                <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-500">Registry contract</p>
-                <p className="mt-2 break-all font-data text-[13px] text-slate-200">{REGISTRY_CONTRACT}</p>
-                <p className="mt-1 text-xs text-slate-500">Portaldot V3 testnet · chain {PORTALDOT_CHAIN_ID}</p>
+            <div className="mt-6 grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+              <div className="border-t border-line pt-6">
+                <p className="text-sm font-medium text-[#7DB4FF]">Registry</p>
+                <p className="mt-2 break-all font-data text-sm text-slate-200">{REGISTRY_CONTRACT}</p>
+                <p className="mt-2 text-xs text-slate-500">Portaldot V3 testnet · chain {PORTALDOT_CHAIN_ID}</p>
               </div>
-              <div className="rounded-xl border border-line bg-panel p-4">
-                <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-500">Anchor transaction</p>
-                <p className="mt-2 break-all font-data text-[13px] text-slate-200">{ANCHOR_TX}</p>
-                <p className="mt-1 text-xs text-slate-500">Anchor block {ANCHOR_BLOCK} · receipt status success</p>
-              </div>
-              <div className="rounded-xl border border-line bg-panel p-4">
-                <p className="font-data text-[11px] uppercase tracking-[0.16em] text-slate-500">Anchored report hash</p>
-                <p className="mt-2 break-all font-data text-[13px] text-slate-200">{ANCHORED_REPORT_HASH}</p>
-                <p className="mt-1 text-xs text-slate-500">Exported {ANCHORED_REPORT_EXPORTED_AT} · {ANCHORED_REPORT_RECORDS} records</p>
+              {ANCHORED_REPORTS.map((r) => (
+                <div key={r.hash} className="border-t border-line pt-6">
+                  <p className="text-sm font-medium text-white">{r.label}</p>
+                  <p className="mt-2 break-all font-data text-sm text-slate-200">{r.hash}</p>
+                  <p className="mt-2 text-xs text-slate-500">
+                    Block {r.block} ·{' '}
+                    <a href={`/verify?hash=${r.hash}&contract=${REGISTRY_CONTRACT}&tx=${r.tx}`} className="text-[#7DB4FF] transition-colors hover:text-white">
+                      Verify →
+                    </a>
+                  </p>
+                  <p className="mt-1 break-all font-data text-xs text-slate-500"><span className="text-slate-600">tx </span><span>{r.tx}</span></p>
+                </div>
+              ))}
+              <div className="border-t border-line pt-6">
+                <p className="text-sm font-medium text-white">Fees</p>
+                <p className="mt-2 font-data text-sm text-slate-200">{t.feeBlockEvm}</p>
+                <p className="mt-1 font-data text-sm text-slate-200">{t.feeBlockNative}</p>
+                <p className="mt-2 text-xs text-slate-500">
+                  <a href="/app/fee-lab" className="text-[#7DB4FF] transition-colors hover:text-white">
+                    {t.feeBlockCta} →
+                  </a>
+                </p>
               </div>
             </div>
-            <div className="mt-6 rounded-xl border border-line bg-panel p-6">
-              <h3 className="font-display text-lg font-semibold text-white">{t.onchainCheckTitle}</h3>
-              <ol className="mt-3 space-y-2.5">
-                {t.onchainCheckSteps.map((s, i) => (
-                  <li key={s} className="flex gap-3 text-[15px] leading-[1.85] text-slate-400">
-                    <span className="font-data text-slate-500">0{i + 1}</span>
-                    <span>{s}</span>
+            <div className="mt-12">
+              <h3 className="text-lg font-medium text-white">{t.onchainCheckTitle}</h3>
+              <ul className="mt-3 divide-y divide-line border-y border-line">
+                {t.onchainCheckSteps.map((s) => (
+                  <li key={s} className="py-3 text-[15px] leading-[1.85] text-slate-400">
+                    {s}
                   </li>
                 ))}
-              </ol>
+              </ul>
               <a
                 href={`/verify?hash=${ANCHORED_REPORT_HASH}&contract=${REGISTRY_CONTRACT}&tx=${ANCHOR_TX}`}
-                className="mt-4 inline-block rounded-lg bg-[#0181FB] px-4 py-2.5 text-sm font-semibold text-white"
+                className="mt-4 inline-block rounded-lg bg-[#7DB4FF] px-4 py-2.5 text-sm font-medium text-[#060b1d] transition hover:brightness-110"
               >
                 Verify this anchor on /verify
               </a>
@@ -1238,14 +1080,14 @@ export function Landing() {
         <div className="mx-auto max-w-6xl">
           <Reveal>
             <SectionHeading title={t.whoTitle} right={t.whoRight} />
-            <div className="grid gap-4 md:grid-cols-2">
+            <ul className="divide-y divide-line border-y border-line">
               {t.whoItems.map((item) => (
-                <div key={item.title} className="rounded-xl border border-line bg-panel p-6">
-                  <h3 className="font-display text-lg font-semibold text-white">{item.title}</h3>
-                  <p className="mt-2 text-[15px] leading-[1.85] text-slate-400">{item.body}</p>
-                </div>
+                <li key={item.title} className="grid gap-2 py-6 md:grid-cols-12">
+                  <h3 className="text-lg font-medium text-white md:col-span-4">{item.title}</h3>
+                  <p className="text-[15px] leading-[1.85] text-slate-400 md:col-span-8">{item.body}</p>
+                </li>
               ))}
-            </div>
+            </ul>
           </Reveal>
         </div>
       </section>
@@ -1258,13 +1100,12 @@ export function Landing() {
             <p className="mt-3 max-w-3xl text-[15px] leading-[1.85] text-slate-400">
               {t.v3Intro}
             </p>
-            <div className="mt-6 grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-6 divide-y divide-line border-y border-line">
               {t.v3Cards.map((link) => (
-                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="group relative block bg-panel/70 p-6 transition-colors hover:bg-panel">
-                  <span aria-hidden="true" className="absolute left-0 top-0 h-[2px] w-full bg-[#0181FB] opacity-0 transition-opacity group-hover:opacity-100" />
-                  <p className="flex items-center justify-between font-data text-[11px] uppercase tracking-[0.16em] text-sky-300">
+                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="block py-6">
+                  <p className="flex items-center justify-between text-sm text-slate-400">
                     {link.label}
-                    <span aria-hidden="true" className="opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100">↗</span>
+                    <span aria-hidden="true">↗</span>
                   </p>
                   <p className="mt-2 break-all font-data text-xs text-slate-300">{link.href}</p>
                   <p className="mt-1.5 text-xs text-slate-500">{link.note}</p>
@@ -1282,36 +1123,24 @@ export function Landing() {
       <section id="roadmap" className="cv-auto scroll-mt-28 px-4 py-16">
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <SectionHeading title={t.roadmapTitle} right={t.roadmapRight} accent="sky" />
-            <div className="relative overflow-hidden rounded-[20px] border border-line">
-              <div aria-hidden="true" className="absolute bottom-6 left-[27px] top-6 w-px bg-line" />
-              <div aria-hidden="true" className="probe-bot absolute left-[14px] top-0 z-10">
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                  <path d="M14 2 L25 8.5 V19.5 L14 26 L3 19.5 V8.5 Z" fill="#0b1220" stroke="#0181FB" strokeWidth="1.5" />
-                  <circle cx="14" cy="14" r="3" fill="#0181FB">
-                    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
-                  </circle>
-                  <path d="M14 2 V0" stroke="#0181FB" strokeWidth="1.5" />
-                </svg>
-              </div>
+            <SectionHeading title={t.roadmapTitle} right={t.roadmapRight} />
+            <div className="divide-y divide-line border-y border-line">
               {t.roadmapItems.map((r) => (
-                <div key={r.title} className="relative bg-panel/70 p-6 pl-16">
-                  <span aria-hidden="true" className="absolute left-[20px] top-7 h-[14px] w-[14px] rounded-full border-2 border-[#0181FB] bg-deep" />
-                  <span className="inline-flex items-center gap-2 font-data text-[11px] uppercase tracking-[0.16em] text-emerald-300">
-                    <span className="h-2 w-2 bg-emerald-400" />
+                <div key={r.title} className="py-6">
+                  <span className="text-sm text-emerald-400">
                     {t.roadmapShipped}
                   </span>
-                  <h3 className="mt-4 font-display text-lg font-semibold text-white">{r.title}</h3>
+                  <h3 className="mt-2 text-lg font-medium text-white">{r.title}</h3>
                   <p className="mt-2 text-[15px] leading-[1.85] text-slate-400">{r.body}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-6 rounded-[20px] border border-dashed border-line bg-panel/50 p-6">
-              <p className="font-data text-[11px] uppercase tracking-[0.16em] text-amber-300">{t.roadmapNextLabel}</p>
-              <div className="mt-4 space-y-4">
+            <div className="mt-10">
+              <p className="text-sm text-amber-300">{t.roadmapNextLabel}</p>
+              <div className="mt-2 divide-y divide-line border-y border-line">
                 {t.roadmapNextItems.map((r) => (
-                  <div key={r.title}>
-                    <h3 className="font-display text-base font-semibold text-white">{r.title}</h3>
+                  <div key={r.title} className="py-6">
+                    <h3 className="text-base font-medium text-white">{r.title}</h3>
                     <p className="mt-1 text-[15px] leading-[1.85] text-slate-400">{r.body}</p>
                   </div>
                 ))}
@@ -1324,6 +1153,25 @@ export function Landing() {
         </div>
       </section>
 
+      {/* ----------------------------- pricing ------------------------------ */}
+      <section id="pricing" className="cv-auto scroll-mt-28 px-4 py-16">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <SectionHeading title={t.pricingTitle} />
+            <div className="divide-y divide-line border-y border-line">
+              <div className="grid gap-2 py-6 md:grid-cols-12">
+                <h3 className="text-lg font-medium text-white md:col-span-4">{t.pricingFreeName}</h3>
+                <p className="text-[15px] leading-[1.85] text-slate-400 md:col-span-8">{t.pricingFreeBody}</p>
+              </div>
+              <div className="grid gap-2 py-6 md:grid-cols-12">
+                <h3 className="text-lg font-medium text-white md:col-span-4">{t.pricingPaidName}</h3>
+                <p className="text-[15px] leading-[1.85] text-slate-400 md:col-span-8">{t.pricingPaidBody}</p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* --------------------------- judge quickstart ------------------------ */}
       <section id="judge" className="cv-auto scroll-mt-28 px-4 py-16">
         <div className="mx-auto max-w-6xl">
@@ -1332,10 +1180,10 @@ export function Landing() {
             <p className="max-w-3xl text-[15px] leading-[1.85] text-slate-400">
               {t.judgeIntro}
             </p>
-            <div className="mt-6 overflow-hidden rounded-xl border border-line">
+            <div className="mt-6 overflow-hidden rounded-lg border border-line">
               {t.judgeSteps.map((s) => (
-                <div key={s.title} className="grid gap-2 border-b border-line bg-panel px-6 py-6 last:border-b-0 md:grid-cols-12">
-                  <h3 className="font-display text-lg font-semibold text-white md:col-span-4">{s.title}</h3>
+                <div key={s.title} className="grid gap-2 border-b border-line px-6 py-6 last:border-b-0 md:grid-cols-12">
+                  <h3 className="text-lg font-medium text-white md:col-span-4">{s.title}</h3>
                   <p className="text-sm leading-relaxed text-slate-400 md:col-span-8">{s.body}</p>
                 </div>
               ))}
@@ -1348,20 +1196,42 @@ export function Landing() {
       </section>
 
       {/* ------------------------------- CTA -------------------------------- */}
-      <section className="cv-auto relative overflow-hidden px-4 py-24">
-        <Reveal className="relative mx-auto max-w-3xl rounded-[32px] border border-line bg-panel/70 px-8 py-16 text-center shadow-[0_32px_90px_rgba(0,0,0,0.5)]">
-          <Activity className="mx-auto h-8 w-8 text-slate-500" />
-          <h2 className="mt-6 font-display text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
-            {t.ctaTitleA}<span className="font-data font-medium">{t.ctaTitleB}</span>
+      <section className="cv-auto px-4 py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-[clamp(1.75rem,3vw,2.5rem)] font-medium leading-tight tracking-tight text-white">
+            {t.ctaTitleA}{t.ctaTitleB}
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-slate-400">
             {t.ctaBody}
           </p>
-          <a href={APP_URL} className="btn-primary mt-9 inline-flex items-center gap-2 rounded-xl px-7 py-4 text-base font-semibold">
-            {t.launchApp}
-            <ArrowRight className="h-5 w-5" />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const v = hash.trim();
+              if (!v) return;
+              const h = v.startsWith('0x') ? v : `0x${v}`;
+              window.location.href = `/verify?hash=${h}`;
+            }}
+            className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row"
+          >
+            <label className="sr-only" htmlFor="cta-hash">{t.ctaHashPlaceholder}</label>
+            <input
+              id="cta-hash"
+              value={hash}
+              onChange={(e) => setHash(e.target.value)}
+              placeholder={t.ctaHashPlaceholder}
+              spellCheck={false}
+              autoComplete="off"
+              className="min-w-0 flex-1 rounded-lg border border-line bg-panel px-4 py-3 font-data text-sm text-white placeholder:text-slate-500 focus:border-[#7DB4FF] focus:outline-none"
+            />
+            <button type="submit" className="rounded-lg bg-[#7DB4FF] px-5 py-3 text-sm font-medium text-[#060b1d] transition hover:brightness-110">
+              {t.ctaHashButton}
+            </button>
+          </form>
+          <a href={APP_URL} className="mt-6 inline-block text-sm font-medium text-[#7DB4FF] transition-colors hover:text-white">
+            {t.launchApp} →
           </a>
-        </Reveal>
+        </div>
       </section>
 
       </main>

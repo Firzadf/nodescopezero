@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest';
 import { describe, it, expect, afterEach, vi } from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { render, screen, fireEvent, cleanup, within } from '@testing-library/react';
 import { Sidebar } from './Sidebar';
 
 afterEach(() => cleanup());
@@ -30,9 +30,9 @@ describe('Sidebar collapse', () => {
     expect(screen.getByText('Health')).toBeTruthy();
     // Two "Fees" texts when expanded: the group label and the public link.
     expect(screen.getAllByText('Fees').length).toBe(2);
-    // Fee Lab keeps its 04 slot across the group boundary.
-    const feeLab = screen.getByTitle('Fee Lab');
-    expect(feeLab.textContent).toContain('04');
+    // Fee Lab stays grouped under Fees.
+    const feesGroup = screen.getAllByText('Fees')[0].closest('div');
+    expect(within(feesGroup as HTMLElement).getByTitle('Fee Lab')).toBeTruthy();
     // Group labels hide when collapsed, like the Public pages header.
     rerender(<Sidebar {...props} collapsed />);
     expect(screen.queryByText('Health')).toBeNull();

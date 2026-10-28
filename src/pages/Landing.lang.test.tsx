@@ -28,7 +28,7 @@ describe('Landing language switcher', () => {
       // Falls back to EN below regardless.
     }
     render(<Landing />);
-    expect(screen.getByText(/Consoles interact\./i)).toBeInTheDocument();
+    expect(screen.getByText(/Every check, anchored\./i)).toBeInTheDocument();
     // Nav label and section heading share the string, so count, don't single out.
     expect(screen.getAllByText('The Problem').length).toBeGreaterThanOrEqual(2);
     expect(screen.getByRole('group', { name: 'Language' })).toBeInTheDocument();

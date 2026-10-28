@@ -97,19 +97,11 @@ export interface PillarCardCopy {
 
 export interface LandingCopy {
   nav: NavLink[];
-  heroPill: string;
-  heroLine1: string;
-  heroAccent: string;
-  heroParagraph: string;
-  heroParagraphEmphasis: string;
-  heroParagraphTail: string;
+  heroTitle: string;
+  heroSentence: string;
   launchApp: string;
   watchDemo: string;
-  heroFactLine: string;
-  heroMeta: string[];
-  heroFigureCaption: string;
-  heroChipEvm: string;
-  heroChipSchema: string;
+  showcaseTitle: string;
   banner: string;
   stats: StatItem[];
   problemTitle: string;
@@ -135,6 +127,7 @@ export interface LandingCopy {
   flowDelta: string;
   howTitle: string;
   howRight: string;
+  howAnchorLine: string;
   howSteps: StepItem[];
   archTitle: string;
   archRight: string;
@@ -172,9 +165,8 @@ export interface LandingCopy {
   capabilityHeaders: [string, string, string];
   capabilities: CapabilityRow[];
   evidenceTitle: string;
+  evidenceRangeLine: string;
   evidenceRight: string;
-  evidenceGridCaption: string;
-  evidenceGridAria: string;
   evidenceHeaders: [string, string, string];
   evidenceRows: EvidenceRow[];
   evidenceFootnote: string;
@@ -211,24 +203,26 @@ export interface LandingCopy {
   pillarSectionIntro: string;
   pillarHealth: PillarCardCopy;
   pillarFees: PillarCardCopy;
-  feeBlockTitle: string;
   feeBlockBody: string;
   feeBlockEvm: string;
   feeBlockNative: string;
-  feeBlockFootnote: string;
   feeBlockCta: string;
   ctaTitleA: string;
   ctaTitleB: string;
   ctaBody: string;
+  ctaHashPlaceholder: string;
+  ctaHashButton: string;
+  pricingTitle: string;
+  pricingFreeName: string;
+  pricingFreeBody: string;
+  pricingPaidName: string;
+  pricingPaidBody: string;
   footerLive: string;
   footerDescription: string;
   footerDisclaimer: string;
   footerColumns: FooterColumn[];
   footerCopyright: string;
   footerSchema: string;
-  packetYou: string;
-  packetReceipt: string;
-  packetNote: string;
   liveReadoutHeader: string;
   liveReadoutLatest: string;
   liveReadoutProbing: string;
@@ -258,25 +252,16 @@ const en: LandingCopy = {
     { href: '/mainnet', label: 'Mainnet' },
     { href: '/verify', label: 'Verify' },
   ],
-  heroPill: 'HUD · Portaldot V3 EVM · Read-only by default',
-  heroLine1: 'Consoles interact.',
-  heroAccent: 'proves.',
-  heroParagraph:
-    "A read-only diagnostics toolkit for Portaldot nodes. It records health checks as snapshots, diffs them deterministically, and exports the report — so a node's health is something you can ",
-  heroParagraphEmphasis: 'show',
-  heroParagraphTail: ', not something you assert.',
+  heroTitle: 'Every check, anchored.',
+  heroSentence:
+    'NodeScope probes a Portaldot node, prices its fees, and anchors the report on-chain, so anyone can verify it.',
   launchApp: 'Launch App',
   watchDemo: 'Watch the demo',
-  heroFactLine:
-    'Portaldot V3 EVM · Chain 420420777 · Testnet · Read-only by default · Optional on-chain anchor · Nothing polls',
-  heroMeta: ['Chain 420420777', 'Testnet', 'No account', 'No wallet required', 'Nothing polls'],
-  heroFigureCaption: 'The app — snapshot comparison, cropped from a real session',
-  heroChipEvm: 'Portaldot V3 EVM',
-  heroChipSchema: 'Report schema v1',
+  showcaseTitle: 'See it work.',
   banner: 'Portaldot Hacker House 2026 · Check-in 22 Oct 2026 · Final / code freeze 6 Nov 2026, 11:00 WIB',
   stats: [
     { value: '420420777', label: 'Chain ID', sub: 'Portaldot V3 EVM · hex 0x190F1CA9 · returned by eth_chainId' },
-    { value: SITE_TESTS, label: 'Tests passing', sub: `${SITE_TEST_FILES} files · Vitest · suite verified 26 Oct 2026` },
+    { value: SITE_TESTS, label: 'Tests passing', sub: `${SITE_TEST_FILES} files · Vitest · suite verified 28 Oct 2026` },
     {
       value: '38',
       label: 'RPC methods probed',
@@ -319,6 +304,7 @@ const en: LandingCopy = {
   flowDelta: 'Δ +12 · 76 s',
   howTitle: 'How It Works',
   howRight: 'Three steps, no setup',
+  howAnchorLine: 'The report ends as a SHA-256 hash anchored on-chain, verifiable by anyone.',
   howSteps: [
     {
       title: 'Connect & check',
@@ -447,10 +433,8 @@ const en: LandingCopy = {
     },
   ],
   evidenceTitle: 'Live Evidence',
+  evidenceRangeLine: 'Range 147,592 to 147,639 observed end-to-end in one session.',
   evidenceRight: 'Observed on the real testnet',
-  evidenceGridCaption:
-    "BLOCKS 147,592 → 147,639 · ONE CELL PER BLOCK · SHADE = POSITION IN RANGE · THE RANGE WAS OBSERVED END-TO-END IN ONE SESSION — THE CHAIN DIDN'T PAUSE FOR US",
-  evidenceGridAria: '48 consecutive blocks observed during one session, from 147,592 to 147,639',
   evidenceHeaders: ['Block height', 'Observation', 'When'],
   evidenceRows: [
     { block: '133,242', label: 'First recorded observation', when: 'Oct 2026' },
@@ -590,7 +574,7 @@ const en: LandingCopy = {
     'If any step fails, that failure is itself the result: NodeScope reports a node that did not answer, it does not dress it up as success.',
   heroPillarLine: 'Two questions, one suite: is the node honest about its condition, and are its fees honest?',
   pillarSectionTitle: 'One suite, two pillars',
-  pillarSectionIntro: 'Health asks whether the node tells the truth about its condition. Fees asks whether its prices tell the truth. Each card below measures one live number, once, when you open this section or press Measure. Nothing polls, and a failed measurement shows as unavailable, never as a made-up number.',
+  pillarSectionIntro: 'Health asks whether the node tells the truth about its condition. Fees asks whether its prices tell the truth. Each band below measures one live number, once, when you open this section or press Measure. Nothing polls, and a failed measurement shows as unavailable, never as a made-up number.',
   pillarHealth: {
     kicker: 'Pillar 01 · Health',
     title: 'NodeScope Health',
@@ -613,15 +597,20 @@ const en: LandingCopy = {
     unavailableLabel: 'Estimate unavailable right now',
     measuredLabel: 'Measured at',
   },
-  feeBlockTitle: 'The number that started the Fees pillar',
   feeBlockBody: 'One measured deploy of the sample token: EVM 124.098219 tPOT against native 122.191411 tPOT all-in. Compared fee-only, the gap reads 804x; compared all-in, it is 1.016x. The difference is the storage deposit, refundable when storage is freed.',
   feeBlockEvm: 'EVM total: 124.098219 tPOT',
   feeBlockNative: 'Native all-in: 122.191411 tPOT (fee 0.154411 + deposit 122.037)',
-  feeBlockFootnote: 'Measured 26 Oct 2026, the same run as the /fees findings table. Re-measure it live in Fee Lab.',
   feeBlockCta: 'See how fees are measured',
   ctaTitleA: 'Put your node ',
   ctaTitleB: 'under the scope.',
   ctaBody: 'Open the live toolkit, run a health check against the Portaldot V3 testnet, and keep the receipt.',
+  ctaHashPlaceholder: 'Paste a report hash (64 hex characters)',
+  ctaHashButton: 'Verify',
+  pricingTitle: 'Free now, paid when there is demand',
+  pricingFreeName: 'Free',
+  pricingFreeBody: 'Open source (MIT): the app, the Fee Lab, the CLI, the GitHub Action, and the attestation registry.',
+  pricingPaidName: 'Paid, when there is demand',
+  pricingPaidBody: 'Hosted monitoring + alerts for node operators, and a managed pre-deploy cost gate with history.',
   footerLive: 'Live · Chain 420420777 · Portaldot V3 EVM Testnet',
   footerDescription:
     'The Portaldot diagnostics toolkit. Consoles interact — NodeScope proves, with a receipt you can hand to anyone.',
@@ -666,9 +655,6 @@ const en: LandingCopy = {
   ],
   footerCopyright: '© 2026 NodeScope',
   footerSchema: 'Report schema · nodescope.diagnostic-report.v1',
-  packetYou: 'You',
-  packetReceipt: 'Receipt',
-  packetNote: 'Decorative flow · carries no live data',
   liveReadoutHeader: '>_ LIVE READOUT · PORTALDOT V3 EVM',
   liveReadoutLatest: 'Latest block — observed by this page',
   liveReadoutProbing: 'PROBING THE ENDPOINT…',
@@ -698,25 +684,16 @@ const id: LandingCopy = {
     { href: '/mainnet', label: 'Mainnet' },
     { href: '/verify', label: 'Verifikasi' },
   ],
-  heroPill: 'HUD · Portaldot V3 EVM · Read-only secara bawaan',
-  heroLine1: 'Konsol berinteraksi.',
-  heroAccent: 'membuktikan.',
-  heroParagraph:
-    'Perangkat diagnostik read-only untuk node Portaldot. Ia merekam health check sebagai snapshot, membandingkannya secara deterministik, dan mengekspor laporannya, sehingga kesehatan sebuah node adalah sesuatu yang bisa kamu ',
-  heroParagraphEmphasis: 'tunjukkan',
-  heroParagraphTail: ', bukan sekadar klaim.',
+  heroTitle: 'Setiap pemeriksaan, terjangkar.',
+  heroSentence:
+    'NodeScope memeriksa node Portaldot, menghitung biayanya, dan menjangkarkan laporannya on-chain, sehingga siapa pun bisa memverifikasinya.',
   launchApp: 'Buka App',
   watchDemo: 'Tonton demo',
-  heroFactLine:
-    'Portaldot V3 EVM · Chain 420420777 · Testnet · Read-only secara bawaan · Anchor on-chain opsional · Tanpa polling',
-  heroMeta: ['Chain 420420777', 'Testnet', 'Tanpa akun', 'Tanpa wallet', 'Tanpa polling'],
-  heroFigureCaption: 'App-nya — perbandingan snapshot, dipotong dari sesi nyata',
-  heroChipEvm: 'Portaldot V3 EVM',
-  heroChipSchema: 'Report schema v1',
+  showcaseTitle: 'Lihat cara kerjanya.',
   banner: 'Portaldot Hacker House 2026 · Check-in 22 Okt 2026 · Final / code freeze 6 Nov 2026, 11:00 WIB',
   stats: [
     { value: '420420777', label: 'Chain ID', sub: 'Portaldot V3 EVM · hex 0x190F1CA9 · dikembalikan oleh eth_chainId' },
-    { value: SITE_TESTS, label: 'Test lolos', sub: `${SITE_TEST_FILES} file · Vitest · suite terverifikasi 26 Okt 2026` },
+    { value: SITE_TESTS, label: 'Test lolos', sub: `${SITE_TEST_FILES} file · Vitest · suite terverifikasi 28 Okt 2026` },
     {
       value: '38',
       label: 'Metode RPC diuji',
@@ -759,6 +736,7 @@ const id: LandingCopy = {
   flowDelta: 'Δ +12 · 76 dtk',
   howTitle: 'Cara Kerja',
   howRight: 'Tiga langkah, tanpa setup',
+  howAnchorLine: 'Laporan berakhir sebagai hash SHA-256 yang terjangkar on-chain, bisa diverifikasi siapa pun.',
   howSteps: [
     {
       title: 'Hubungkan & periksa',
@@ -886,10 +864,8 @@ const id: LandingCopy = {
     },
   ],
   evidenceTitle: 'Bukti Live',
+  evidenceRangeLine: 'Rentang 147,592 sampai 147,639 diamati penuh dalam satu sesi.',
   evidenceRight: 'Diamati di testnet nyata',
-  evidenceGridCaption:
-    "BLOK 147,592 → 147,639 · SATU SEL PER BLOK · WARNA = POSISI DALAM RENTANG · RENTANG DIAMATI PENUH DALAM SATU SESI — CHAIN TIDAK BERHENTI UNTUK KAMI",
-  evidenceGridAria: '48 blok berurutan yang diamati dalam satu sesi, dari 147,592 sampai 147,639',
   evidenceHeaders: ['Tinggi blok', 'Observasi', 'Kapan'],
   evidenceRows: [
     { block: '133,242', label: 'Observasi pertama yang direkam', when: 'Okt 2026' },
@@ -1029,7 +1005,7 @@ const id: LandingCopy = {
     'Jika ada langkah yang gagal, kegagalan itu sendiri adalah hasilnya: NodeScope melaporkan node yang tidak menjawab, bukan menyulapnya menjadi sukses.',
   heroPillarLine: 'Dua pertanyaan, satu suite: apakah node jujur soal kondisinya, dan apakah biayanya jujur?',
   pillarSectionTitle: 'Satu suite, dua pilar',
-  pillarSectionIntro: 'Health bertanya apakah node berkata jujur soal kondisinya. Fees bertanya apakah harganya berkata jujur. Setiap kartu di bawah mengukur satu angka live, sekali, saat bagian ini dibuka atau saat tombol Ukur ditekan. Tidak ada polling, dan pengukuran yang gagal tampil sebagai tidak tersedia, bukan angka karangan.',
+  pillarSectionIntro: 'Health bertanya apakah node berkata jujur soal kondisinya. Fees bertanya apakah harganya berkata jujur. Setiap band di bawah mengukur satu angka live, sekali, saat bagian ini dibuka atau saat tombol Ukur ditekan. Tidak ada polling, dan pengukuran yang gagal tampil sebagai tidak tersedia, bukan angka karangan.',
   pillarHealth: {
     kicker: 'Pilar 01 · Health',
     title: 'NodeScope Health',
@@ -1052,15 +1028,20 @@ const id: LandingCopy = {
     unavailableLabel: 'Estimasi tidak tersedia saat ini',
     measuredLabel: 'Diukur pada',
   },
-  feeBlockTitle: 'Angka yang melahirkan pilar Fees',
   feeBlockBody: 'Satu deploy terukur dari token sampel: EVM 124,098219 tPOT berbanding native 122,191411 tPOT all-in. Dibandingkan fee-only, selisihnya terbaca 804x; dibandingkan all-in, selisihnya 1,016x. Selisih itu adalah storage deposit, yang bisa dikembalikan saat storage dibebaskan.',
   feeBlockEvm: 'Total EVM: 124,098219 tPOT',
   feeBlockNative: 'Native all-in: 122,191411 tPOT (fee 0,154411 + deposit 122,037)',
-  feeBlockFootnote: 'Diukur 26 Okt 2026, run yang sama dengan tabel temuan /fees. Ukur ulang secara live di Fee Lab.',
   feeBlockCta: 'Lihat cara fee diukur',
   ctaTitleA: 'Letakkan node-mu ',
   ctaTitleB: 'di bawah scope.',
   ctaBody: 'Buka toolkit live, jalankan health check terhadap testnet Portaldot V3, dan simpan receipt-nya.',
+  ctaHashPlaceholder: 'Tempel hash laporan (64 karakter hex)',
+  ctaHashButton: 'Verifikasi',
+  pricingTitle: 'Gratis sekarang, berbayar saat ada permintaan',
+  pricingFreeName: 'Gratis',
+  pricingFreeBody: 'Open source (MIT): aplikasi, Fee Lab, CLI, GitHub Action, dan registry attestasi.',
+  pricingPaidName: 'Berbayar, saat ada permintaan',
+  pricingPaidBody: 'Monitoring + alert hosted untuk operator node, dan cost gate pra-deploy terkelola dengan riwayat.',
   footerLive: 'Live · Chain 420420777 · Portaldot V3 EVM Testnet',
   footerDescription:
     'Toolkit diagnostik Portaldot. Konsol berinteraksi, NodeScope membuktikan, dengan receipt yang bisa kamu serahkan ke siapa pun.',
@@ -1105,9 +1086,6 @@ const id: LandingCopy = {
   ],
   footerCopyright: '© 2026 NodeScope',
   footerSchema: 'Report schema · nodescope.diagnostic-report.v1',
-  packetYou: 'Kamu',
-  packetReceipt: 'Receipt',
-  packetNote: 'Alur dekoratif · tidak membawa data live',
   liveReadoutHeader: '>_ LIVE READOUT · PORTALDOT V3 EVM',
   liveReadoutLatest: 'Blok terbaru — diamati oleh halaman ini',
   liveReadoutProbing: 'MENYELIDIKI ENDPOINT…',

@@ -265,7 +265,7 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
       )}
 
       {inputError && (
-        <p role="alert" className="rounded-xl border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+        <p role="alert" className="rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300">
           {inputError}
         </p>
       )}
@@ -275,7 +275,7 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
           type="button"
           onClick={() => void run()}
           disabled={busy}
-          className="rounded-xl bg-amber-400 px-6 py-3 text-[15px] font-semibold text-black transition-colors hover:bg-amber-300 disabled:opacity-50"
+          className="rounded-lg bg-[#7DB4FF] px-6 py-3 text-[15px] font-medium text-[#060b1d] transition-opacity hover:opacity-90 disabled:opacity-50"
         >
           {busy ? c.measureBusy : c.measure}
         </button>
@@ -284,7 +284,7 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
       <p className="text-xs text-slate-400">{c.fromNote.replace('{from}', SAMPLE.holder)}</p>
       <p className="text-xs text-slate-400">{c.triggeredNote}</p>
       {error && (
-        <p role="alert" className="rounded-xl border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+        <p role="alert" className="rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300">
           {error}
         </p>
       )}
@@ -293,10 +293,10 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
         <div className="grid gap-4">
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-2xl border border-line bg-black/25 p-4">
-              <span className="text-sm font-semibold text-[#7DB4FF]">{p.evmSurface}</span>
+              <span className="text-sm font-medium text-[#7DB4FF]">{p.evmSurface}</span>
               {result.evm.status === 'ok' ? (
                 <>
-                  <div className="mt-2 text-2xl font-semibold tabular-nums text-white">
+                  <div className="mt-2 text-2xl font-medium tabular-nums text-white">
                     {tpot(result.evm.totalPlanck)} <span className="text-sm text-slate-400">tPOT</span>
                   </div>
                   <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs text-slate-400">
@@ -310,7 +310,7 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
                 </>
               ) : (
                 <div className="mt-2">
-                  <div className="text-2xl font-semibold text-slate-400">{p.unavailable}</div>
+                  <div className="text-2xl font-medium text-slate-400">{p.unavailable}</div>
                   <p className="mt-2 text-xs text-slate-400">
                     <span className="font-data">{result.evm.method}</span>: {result.evm.reason}
                   </p>
@@ -318,10 +318,10 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
               )}
             </div>
             <div className="rounded-2xl border border-line bg-black/25 p-4">
-              <span className="text-sm font-semibold text-emerald-300">{p.nativeSurface}</span>
+              <span className="text-sm font-medium text-emerald-300">{p.nativeSurface}</span>
               {result.native.status === 'ok' ? (
                 <>
-                  <div className="mt-2 text-2xl font-semibold tabular-nums text-white">
+                  <div className="mt-2 text-2xl font-medium tabular-nums text-white">
                     {tpot(result.native.totalPlanck)} <span className="text-sm text-slate-400">tPOT</span>
                   </div>
                   <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-xs text-slate-400">
@@ -335,7 +335,7 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
                 </>
               ) : (
                 <div className="mt-2">
-                  <div className="text-2xl font-semibold text-slate-400">{p.unavailable}</div>
+                  <div className="text-2xl font-medium text-slate-400">{p.unavailable}</div>
                   <p className="mt-2 text-xs text-slate-400">
                     <span className="font-data">{result.native.method}</span>: {result.native.reason}
                   </p>
@@ -344,19 +344,19 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
             </div>
           </div>
 
-          <div className="grid gap-3 rounded-xl border border-line bg-panel p-4 sm:grid-cols-3">
+          <div className="grid gap-3 rounded-lg border border-line bg-panel p-4 sm:grid-cols-3">
             <div>
-              <div className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-400">{p.recPath}</div>
-              <div className="text-lg font-semibold text-white">{rec}</div>
+              <div className="font-data text-[11px] text-slate-400">{p.recPath}</div>
+              <div className="text-lg font-medium text-white">{rec}</div>
             </div>
             <div>
-              <div className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-400">{p.ratioAllIn}</div>
-              <div className="text-lg font-semibold tabular-nums text-white">{fmtRatio(result.ratioAllIn)}</div>
+              <div className="font-data text-[11px] text-slate-400">{p.ratioAllIn}</div>
+              <div className="text-lg font-medium tabular-nums text-white">{fmtRatio(result.ratioAllIn)}</div>
               <div className="text-[11px] text-slate-400">{p.ratioAllInNote}</div>
             </div>
             <div>
-              <div className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-400">{p.ratioFeeOnly}</div>
-              <div className="text-lg font-semibold tabular-nums text-white">{fmtRatio(result.ratioVsNativeFeeOnly)}</div>
+              <div className="font-data text-[11px] text-slate-400">{p.ratioFeeOnly}</div>
+              <div className="text-lg font-medium tabular-nums text-white">{fmtRatio(result.ratioVsNativeFeeOnly)}</div>
               <div className="text-[11px] text-slate-400">{p.ratioFeeOnlyNote}</div>
             </div>
             <p className="text-xs text-slate-400 sm:col-span-3">
@@ -365,8 +365,8 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
           </div>
 
           {result.native.status === 'ok' && result.evm.status === 'ok' && (
-            <div className="grid gap-4 rounded-xl border border-line bg-panel p-4">
-              <div className="font-data text-[11px] uppercase tracking-[0.18em] text-slate-400">{p.breakTitle}</div>
+            <div className="grid gap-4 rounded-lg border border-line bg-panel p-4">
+              <div className="font-data text-[11px] text-slate-400">{p.breakTitle}</div>
               <div className="grid gap-1.5">
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="text-xs text-slate-400">{p.breakEvm}</span>
@@ -379,7 +379,7 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
                   role="img"
                   aria-label={`${p.breakEvm}: ${tpot(result.evm.totalPlanck)} tPOT`}
                 >
-                  <div className="h-full bg-[#0181FB]" style={{ width: '100%' }} />
+                  <div className="h-full bg-[#7DB4FF]" style={{ width: '100%' }} />
                 </div>
               </div>
               <div className="grid gap-1.5">
@@ -427,8 +427,8 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
             </div>
           )}
 
-          <div className="rounded-xl border border-amber-400/25 bg-amber-400/[0.06] p-4">
-            <h3 className="text-[15px] font-semibold text-white">{c.depositTitle}</h3>
+          <div className="rounded-lg border border-amber-400/25 bg-amber-400/[0.06] p-4">
+            <h3 className="text-[15px] font-medium text-white">{c.depositTitle}</h3>
             <p className="mt-2 text-sm leading-relaxed text-slate-400">{c.depositBody}</p>
             <p className="mt-2 text-xs text-slate-400">{c.depositNote}</p>
           </div>
@@ -445,7 +445,7 @@ export function DeployCostCalculator({ lang }: { lang: Lang }) {
             <span className="text-xs text-slate-400">{p.exportNote}</span>
           </div>
           {exportError && (
-            <p role="alert" className="rounded-xl border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+            <p role="alert" className="rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-300">
               {p.exportError}
             </p>
           )}
